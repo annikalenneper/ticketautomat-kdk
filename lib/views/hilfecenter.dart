@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ticket_alternative/styles/app_colors.dart';
 import 'package:ticket_alternative/headers/help_header.dart';
+import 'package:ticket_alternative/dialogues/faq_dialogues.dart';
 
 class HilfeCenter extends StatefulWidget {
   const HilfeCenter({super.key});
@@ -19,17 +20,17 @@ class _HilfeCenterState extends State<HilfeCenter> {
           'Du befindest dich am KVB Ticketautomaten im Karneval der Kollektive. Der Automat hilft dir, schnell und einfach Fahrkarten für deine Reise zu kaufen.',
     ),
     FAQItem(
-      title: 'DJ-Timetable',
+      title: '<Was kann hier noch stehen???>',
       content:
           'Das DJ-Timetable für das heutige Event findest du unter folgenden Bühnen: Hauptbühne 14:00-15:30 | Nebenbühne 15:00-16:30 | Campusbühne 16:00-17:30. Nutze die Öffi um pünktlich zu deinen Lieblings-DJs zu kommen!',
     ),
     FAQItem(
-      title: 'Code of Conduct',
+      title: 'Wie habe ich mich zu verhalten?',
       content:
           'Respekt, Toleranz und Sicherheit sind uns wichtig! Verhalte dich respektvoll gegenüber anderen Besucher*innen und Mitarbeiter*innen. Diskriminierung und Gewalt werden nicht toleriert. Bei Fragen oder Problemen kontaktiere jederzeit unser Team.',
     ),
     FAQItem(
-      title: 'Was kann ich sonst noch tun?',
+      title: 'Kann der Automat noch mehr?',
       content:
           'Neben dem Ticketkauf kannst du mit dieser Anwendung auch schnell wichtige Informationen zur Veranstaltung abrufen, die Anlage finden und dich mit anderen austauschen. Bei Fragen helfen wir dir gerne weiter!',
     ),
@@ -52,7 +53,7 @@ class _HilfeCenterState extends State<HilfeCenter> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   _buildFAQSection(),
-                  const SizedBox(height: 15),
+                  const SizedBox(height: 60),
                   _buildSupportSection(),
                 ],
               ),
@@ -84,7 +85,7 @@ class _HilfeCenterState extends State<HilfeCenter> {
             ],
           ),
           child: const Text(
-            'HÄUFIG GESTELLTE FRAGEN',
+            'FAQ - FREQUENTLY ASKED QUESTIONS',
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.w800,
@@ -94,88 +95,72 @@ class _HilfeCenterState extends State<HilfeCenter> {
           ),
         ),
         const SizedBox(height: 25),
-        ..._faqItems.asMap().entries.map((entry) {
-            int index = entry.key;
-            FAQItem item = entry.value;
-            bool isExpanded = _expandedIndex == index;
-
-            return Padding(
-              padding: const EdgeInsets.only(bottom: 12),
-              child: _buildFAQItem(item, index, isExpanded),
-            );
-          }),
-        ],
-      );
-  }
-
-  Widget _buildFAQItem(FAQItem item, int index, bool isExpanded) {
-    return Container(
-      decoration: BoxDecoration(
-        color: AppColors.white,
-        border: Border.all(
-          color: AppColors.black,
-          width: 2,
-        ),
-        boxShadow: const [
-          BoxShadow(
-            color: AppColors.black,
-            offset: Offset(4, 4),
-          ),
-        ],
-      ),
-      child: Column(
-        children: [
-          GestureDetector(
-            onTap: () {
-              setState(() {
-                _expandedIndex = isExpanded ? null : index;
-              });
-            },
-            child: Container(
-              padding: const EdgeInsets.all(18),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    child: Text(
-                      item.title.toUpperCase(),
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w800,
-                        color: isExpanded ? AppColors.primary : AppColors.textDark,
-                        letterSpacing: 1,
-                      ),
-                    ),
-                  ),
-                  Icon(
-                    isExpanded ? Icons.remove : Icons.add,
-                    color: AppColors.black,
-                    size: 28,
-                  ),
-                ],
-              ),
+        Column(
+          children: [
+            Row(
+              children: [
+                Expanded(child: _buildGridItem(_faqItems[0])),
+                const SizedBox(width: 20),
+                Expanded(child: _buildGridItem(_faqItems[1])),
+              ],
             ),
-          ),
-          if (isExpanded) ...[
-            Container(
-              height: 2,
-              color: AppColors.black,
-            ),
-            Container(
-              padding: const EdgeInsets.all(18),
-              color: AppColors.backgroundUltraLight,
-              child: Text(
-                item.content,
-                style: const TextStyle(
-                  fontSize: 14,
-                  color: AppColors.textDark,
-                  fontWeight: FontWeight.w600,
-                  height: 1.6,
-                ),
-              ),
+            const SizedBox(height: 20),
+            Row(
+              children: [
+                Expanded(child: _buildGridItem(_faqItems[2])),
+                const SizedBox(width: 20),
+                Expanded(child: _buildGridItem(_faqItems[3])),
+              ],
             ),
           ],
-        ],
+        ),
+      ],
+    );
+  }
+
+  Widget _buildGridItem(FAQItem item) {
+    return GestureDetector(
+      onTap: () {
+        if (item.title == 'Wie habe ich mich zu verhalten?') {
+          showDialog(
+            context: context,
+            builder: (context) => const CodeOfConductDialog(),
+          );
+        } else {
+          showDialog(
+            context: context,
+            builder: (context) => FAQDialog(
+              title: item.title,
+              content: item.content,
+            ),
+          );
+        }
+      },
+      child: Container(
+        height: 120,
+        padding: const EdgeInsets.all(15),
+        decoration: BoxDecoration(
+          color: AppColors.white,
+          border: Border.all(color: AppColors.black, width: 2),
+          boxShadow: const [
+            BoxShadow(
+              color: AppColors.black,
+              offset: Offset(4, 4),
+            ),
+          ],
+        ),
+        child: Center(
+          child: Text(
+            item.title.toUpperCase(),
+            textAlign: TextAlign.center,
+            style: const TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.w800,
+              color: AppColors.textDark,
+              letterSpacing: 1,
+            ),
+          ),
+        ),
       ),
     );
   }

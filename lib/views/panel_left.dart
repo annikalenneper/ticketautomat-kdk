@@ -36,8 +36,16 @@ class PanelLeft extends StatelessWidget {
               child: _buildTripDetails(),
             ),
             const SizedBox(height: 15),
-            SizedBox(
+            Container(
               width: double.infinity,
+              decoration: const BoxDecoration(
+                boxShadow: [
+                  BoxShadow(
+                    color: AppColors.black,
+                    offset: Offset(4, 4),
+                  ),
+                ],
+              ),
               child: ElevatedButton(
                 onPressed: toController.text.isEmpty
                     ? null
@@ -59,10 +67,10 @@ class PanelLeft extends StatelessWidget {
                   backgroundColor: AppColors.secondary,
                   foregroundColor: AppColors.white,
                   padding: const EdgeInsets.symmetric(vertical: 16),
-                  elevation: 6,
-                  shadowColor: AppColors.black,
-                  shape: const ContinuousRectangleBorder(
-                    side: BorderSide(color: AppColors.black, width: 2),
+                  elevation: 0,
+                  side: const BorderSide(color: AppColors.black, width: 2),
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.zero,
                   ),
                   disabledBackgroundColor: AppColors.border,
                 ),

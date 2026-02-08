@@ -21,13 +21,14 @@ class HelpHeader extends StatelessWidget {
             children: [
               Container(
                 height: 67,
+                padding: const EdgeInsets.all(5),
                 decoration: BoxDecoration(
                   color: AppColors.white,
                   border: Border.all(color: AppColors.black, width: 2),
                 ),
                 child: Image.asset(
                   'lib/img/LOGO.jpeg',
-                  fit: BoxFit.fitHeight,
+                  fit: BoxFit.contain,
                 ),
               ),
               const SizedBox(width: 18),
@@ -45,7 +46,7 @@ class HelpHeader extends StatelessWidget {
                   ),
                   SizedBox(height: 3),
                   Text(
-                    'Wir helfen dir gerne weiter',
+                    'Wir helfen Ihnen vielleicht weiter',
                     style: TextStyle(
                       color: AppColors.white,
                       fontSize: 16,

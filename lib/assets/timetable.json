@@ -1,0 +1,202 @@
+{
+  "djSlotsDonnerstagOben": [
+    {
+      "djName": "nuancé",
+      "startTime": "19:00"
+    },
+    {
+      "djName": "Seebode & Schraven",
+      "startTime": "21:00"
+    },
+    {
+      "djName": "Chris Schwarzwälder",
+      "startTime": "23:00"
+    },
+    {
+      "djName": "Sandilé",
+      "startTime": "01:00"
+    },
+    {
+      "djName": "Anna Almani",
+      "startTime": "03:00"
+    },
+    {
+      "djName": "To be honest",
+      "startTime": "05:00"
+    }
+  ],
+  "djSlotsDonnerstagUnten": [
+    {
+      "djName": "Jezebel",
+      "startTime": "20:00"
+    },
+    {
+      "djName": "Romy",
+      "startTime": "22:00"
+    },
+    {
+      "djName": "Maree b2b Reinhard",
+      "startTime": "00:00"
+    },
+    {
+      "djName": "Savsannah",
+      "startTime": "02:30"
+    },
+    {
+      "djName": "Pete b2b Feli",
+      "startTime": "04:30"
+    }
+  ],
+  "djSlotsFreitagOben": [
+    {
+      "djName": "krachim & sophya",
+      "startTime": "19:00"
+    },
+    {
+      "djName": "Mwaah",
+      "startTime": "21:00"
+    },
+    {
+      "djName": "Loy Bonheur",
+      "startTime": "23:00"
+    },
+    {
+      "djName": "Temple Tears",
+      "startTime": "01:00"
+    },
+    {
+      "djName": "MTvE b2b Francesca",
+      "startTime": "03:00"
+    },
+    {
+      "djName": "noro",
+      "startTime": "05:00"
+    }
+  ],
+  "djSlotsFreitagUnten": [
+    {
+      "djName": "Kira Kete",
+      "startTime": "22:00"
+    },
+    {
+      "djName": "Rakäthe",
+      "startTime": "00:00"
+    },
+    {
+      "djName": "BunnyFlip b2b Minahri",
+      "startTime": "02:00"
+    },
+    {
+      "djName": "Laura",
+      "startTime": "04:00"
+    }
+  ],
+  "djSlotsSamstagOben": [
+    {
+      "djName": "Miaurin b2b Be legèr",
+      "startTime": "19:00"
+    },
+    {
+      "djName": "Diladï",
+      "startTime": "21:00"
+    },
+    {
+      "djName": "Haana Peony",
+      "startTime": "23:00"
+    },
+    {
+      "djName": "Boom Sister",
+      "startTime": "01:00"
+    },
+    {
+      "djName": "Fabian Laute",
+      "startTime": "03:00"
+    },
+    {
+      "djName": "messofmystery & Enklertrick",
+      "startTime": "05:00"
+    }
+  ],
+  "djSlotsSamstagUnten": [
+    {
+      "djName": "Crémant Clément",
+      "startTime": "19:00"
+    },
+    {
+      "djName": "no:andra",
+      "startTime": "21:00"
+    },
+    {
+      "djName": "Pachahanna",
+      "startTime": "22:30"
+    },
+    {
+      "djName": "Justice [DE]",
+      "startTime": "00:30"
+    },
+    {
+      "djName": "Findelkind",
+      "startTime": "02:30"
+    },
+    {
+      "djName": "NayaJayan",
+      "startTime": "04:00"
+    },
+    {
+      "djName": "Xynteravyn",
+      "startTime": "05:30"
+    }
+  ],
+  "djSlotsSonntagOben": [
+    {
+      "djName": "neeks",
+      "startTime": "19:00"
+    },
+    {
+      "djName": "Boi",
+      "startTime": "20:30"
+    },
+    {
+      "djName": "Visky",
+      "startTime": "22:00"
+    },
+    {
+      "djName": "Harmon LIVE",
+      "startTime": "23:30"
+    },
+    {
+      "djName": "SAM",
+      "startTime": "01:30"
+    },
+    {
+      "djName": "AINO",
+      "startTime": "03:00"
+    },
+    {
+      "djName": "Rob Roberts",
+      "startTime": "05:00"
+    }
+  ],
+  "djSlotsSonntagUnten": [
+    {
+      "djName": "DJ HOTLINE",
+      "startTime": "19:00"
+    },
+    {
+      "djName": "Wante",
+      "startTime": "21:30"
+    },
+    {
+      "djName": "Connor Shafran",
+      "startTime": "00:00"
+    },
+    {
+      "djName": "oskø",
+      "startTime": "01:00"
+    },
+    {
+      "djName": "Elisen b2b Di²",
+      "startTime": "03:00"
+    }
+  ]
+}

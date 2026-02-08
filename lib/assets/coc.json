@@ -1,0 +1,72 @@
+{
+  "title": "Karneval der Kollektive",
+  "type": "Verhaltenskodex",
+  "language": "de",
+  "scope": [
+    "Gäste",
+    "Artists",
+    "Crew",
+    "Veranstalter*innen",
+    "Helfer*innen"
+  ],
+  "principles": [
+    {
+      "id": "gemeinsame verantwortung",
+      "title": "Gemeinsam Verantwortung tragen",
+      "description": "Wir wollen gemeinsam einen möglichst diskriminierungsfreien, nicht wertenden Raum schaffen, in dem sich alle willkommen und respektiert fühlen. Alle Teilnehmenden der Veranstaltung sind dafür mitverantwortlich."
+    },
+    {
+        "id": "antidiskriminierung",
+        "title": "Antidiskriminierung",
+        "description": "Wir dulden keinerlei Form von Diskriminierung - dazu zählen u.a. Sexismus, Rassismus, Antisemitismus, Queer- und Transfeindlichkeit, Ableismus, Klassismus, Bodyshaming sowie jede Form von Herabwürdigung oder Übergriffigkeit.",
+        "consequences": "Bei Verstößen folgen entsprechende Konsequenzen bis hin zum Veranstaltungsverweis."
+    },
+    {
+      "id": "konsens",
+      "title": "Konsens-Prinzip",
+      "description": "Nur ja heißt ja: Handle nach dem Konsens-Prinzip. Sei empathisch, denke mit und respektiere die körperlichen und verbalen Grenzen deiner Mitmenschen."
+    },
+    {
+      "id": "medien",
+      "title": "Foto- und Filmverbot",
+      "description": "Wir möchten die Zeit miteinander genießen - ohne durch eine Handykamera gefilmt oder fotografiert zu werden. Wir bitten dich, das Foto- und Filmverbot zu akzeptieren.",
+      "measures": [    
+        "Am Einlass werden Sticker zum Abdecken der Handykameras ausgeteilt. Wir behalten uns vor, dich anzusprechen, solltest du Fotos oder Videos machen.",
+        "An der vor Ort vorbereiteten Fotobox können du und deine Freund*innen selbstverständlich besondere Momente festhalten.",
+        "Offiziell engagierte Fotograf*innen werden Fotos von der Deko, Artists und ggf. weitwinklige Fotos vom Floor machen. Menschen sind dabei ausschließlich von hinten zu sehen."
+      ]
+    },
+    {
+      "id": "toiletten",
+      "title": "Toilettenregelung",
+      "description": "Um Diskriminierung auf Toiletten zu verhindern, gibt es während der Veranstaltung All-Gender-Toiletten und FLINTA*-Only-Toiletten.",
+      "note": "Beachtet dabei: Eure persönliche Meinung oder Interpretation entscheiden NICHT darüber, wer welche Toilette benutzen darf. Gäste entscheiden selbst, was sie für sich als richtig und sicher erachten."
+    },
+    {
+      "id": "pronomen",
+      "title": "Pronomen & Ansprache",
+      "description": "Du bist unsicher, welche Pronomen eine Person hat? Frage nach, mit welchem Pronomen die Person angesprochen werden möchte. Uns ist ein sensibler und respektvoller Umgang miteinander sehr wichtig."
+    },
+    {
+      "id": "feedback",
+      "title": "Fehlerkultur & Feedback",
+      "description": "Wir machen alle Fehler. Daher bitten wir euch, Menschen Gehör zu schenken, die euch Kritik entgegenbringen. Feedback offen anzunehmen, zuzuhören und verstehen zu wollen fördert den konstruktiven Umgang miteinander. ",
+      "event_feedback": "Auch wir freuen uns über Feedback, um in Zukunft besser zu werden."
+    },
+    {
+      "id": "kostueme",
+      "title": "Kostüme",
+      "description": "KKarneval lebt von bunten Kostümen und heißt Vielfalt, ausgelassene Freude – und Respekt! Vermeide Kostüme, die diskriminieren oder Gewaltmonopole darstellen. ",
+      "examples": [
+        "Waffen",
+        "Nachahmung von Kulturen"
+      ],
+      "guidance": "Wenn ihr unsicher seid, wählt lieber ein anderes Outfit."
+    },
+    {
+      "id": "kleidung",
+      "title": "No Shirt – No Party",
+      "description": "Oben-ohne-Feiern ist für uns unangebracht. Damit möchten wir Fairness gegenüber Menschen gewährleisten, deren Oberkörper-Freiheit im öffentlichen Raum nach wie vor kriminalisiert ist. Weiterhin verhindert diese Maßnahme eine Reproduktion von dominanter, raumgreifender und toxischer Männlichkeit. "
+    }
+  ]
+}

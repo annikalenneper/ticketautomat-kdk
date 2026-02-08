@@ -22,13 +22,14 @@ class Header extends StatelessWidget {
             children: [
               Container(
                 height: 67,
+                padding: const EdgeInsets.all(5),
                 decoration: BoxDecoration(
                   color: AppColors.white,
                   border: Border.all(color: AppColors.black, width: 2),
                 ),
                 child: Image.asset(
                   'lib/img/LOGO.jpeg',
-                  fit: BoxFit.fitHeight,
+                  fit: BoxFit.contain,
                 ),
               ),
               const SizedBox(width: 18),
@@ -57,35 +58,45 @@ class Header extends StatelessWidget {
               ),
             ],
           ),
-          ElevatedButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const HilfeCenter()),
-              );
-            },
-            style: ElevatedButton.styleFrom(
-              backgroundColor: AppColors.backgroundLight,
-              foregroundColor: AppColors.black,
-              padding: const EdgeInsets.symmetric(horizontal: 35, vertical: 15),
-              elevation: 4,
-              shadowColor: AppColors.black,
-              shape: const ContinuousRectangleBorder(
-                side: BorderSide(color: AppColors.black, width: 2),
-              ),
-            ),
-            child: const Row(
-              children: [
-                Text('?', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-                SizedBox(width: 10),
-                Text(
-                  'Hilfe-Center',
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w700,
-                  ),
+          Container(
+            decoration: const BoxDecoration(
+              boxShadow: [
+                BoxShadow(
+                  color: AppColors.black,
+                  offset: Offset(4, 4),
                 ),
               ],
+            ),
+            child: ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const HilfeCenter()),
+                );
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: AppColors.backgroundLight,
+                foregroundColor: AppColors.black,
+                padding: const EdgeInsets.symmetric(horizontal: 35, vertical: 15),
+                elevation: 0,
+                side: const BorderSide(color: AppColors.black, width: 2),
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.zero,
+                ),
+              ),
+              child: const Row(
+                children: [
+                  Text('?', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                  SizedBox(width: 10),
+                  Text(
+                    'Hilfe-Center',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ],
