@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ticket_alternative/styles/app_colors.dart';
+import 'package:ticket_alternative/printservice/printer_dialog.dart';
 
 class PanelLeft extends StatelessWidget {
   final TextEditingController toController;
@@ -13,37 +14,76 @@ class PanelLeft extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: Container(
-        padding: const EdgeInsets.all(25),
+        padding: const EdgeInsets.all(20),
         decoration: const BoxDecoration(
           color: AppColors.backgroundLight,
           border: Border(
             right: BorderSide(color: AppColors.border, width: 2),
           ),
         ),
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _buildSectionTitle('🚉 IHRE REISE'),
-              const SizedBox(height: 15),
-              _buildFixedStartStation(),
-              const SizedBox(height: 20),
-              _buildDestinationInput(context),
-              const SizedBox(height: 35),
-              _buildSectionTitle('ℹ️ FAHRTINFORMATIONEN', fontSize: 16),
-              const SizedBox(height: 15),
-              _buildTripDetails(),
-            ],
-          ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisSize: MainAxisSize.max,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _buildSectionTitle('🚉 IHRE REISE'),
+            const SizedBox(height: 10),
+            _buildFixedStartStation(),
+            const SizedBox(height: 12),
+            _buildDestinationInput(context),
+            const SizedBox(height: 20),
+            _buildSectionTitle('ℹ️ FAHRTINFORMATIONEN', fontSize: 18),
+            const SizedBox(height: 10),
+            Expanded(
+              child: _buildTripDetails(),
+            ),
+            const SizedBox(height: 15),
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: toController.text.isEmpty
+                    ? null
+                    : () {
+                        // Berechne Preis basierend auf Destination
+                        final isLongDistance = toController.text.length > 5;
+                        final price = isLongDistance ? 5.30 : 3.20;
+
+                        showDialog(
+                          context: context,
+                          builder: (context) => PrinterDialog(
+                            from: 'BüZe Ehrenfeld',
+                            to: toController.text,
+                            price: price,
+                          ),
+                        );
+                      },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppColors.secondary,
+                  foregroundColor: AppColors.white,
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                  disabledBackgroundColor: AppColors.inputBorder,
+                ),
+                child: const Text(
+                  'Mit der Buchung fortfahren',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );
   }
 
-  Widget _buildSectionTitle(String title, {double fontSize = 17}) {
+  Widget _buildSectionTitle(String title, {double fontSize = 19}) {
     return Container(
-      padding: const EdgeInsets.only(bottom: 10),
+      padding: const EdgeInsets.only(bottom: 12),
       decoration: const BoxDecoration(
         border: Border(
           bottom: BorderSide(color: AppColors.primary, width: 3),
@@ -68,23 +108,23 @@ class PanelLeft extends StatelessWidget {
         const Text(
           'Von (Start-Haltestelle)',
           style: TextStyle(
-            fontSize: 14,
+            fontSize: 16,
             fontWeight: FontWeight.w600,
             color: AppColors.textMedium,
           ),
         ),
-        const SizedBox(height: 8),
+        const SizedBox(height: 10),
         TextField(
           enabled: false,
           style: const TextStyle(
-            fontSize: 16,
+            fontSize: 18,
             fontWeight: FontWeight.w500,
             color: AppColors.textDark,
           ),
           decoration: InputDecoration(
             hintText: 'BüZe Ehrenfeld',
             hintStyle: const TextStyle(
-              fontSize: 16,
+              fontSize: 18,
               color: AppColors.textMedium,
             ),
             filled: true,
@@ -105,7 +145,7 @@ class PanelLeft extends StatelessWidget {
               borderRadius: BorderRadius.circular(4),
               borderSide: const BorderSide(color: AppColors.primary, width: 2),
             ),
-            contentPadding: const EdgeInsets.all(15),
+              contentPadding: const EdgeInsets.all(17),
             prefixIcon: const Icon(
               Icons.start,
               color: AppColors.primary,
@@ -136,12 +176,12 @@ class PanelLeft extends StatelessWidget {
         const Text(
           'Nach (Ziel-Haltestelle)',
           style: TextStyle(
-            fontSize: 14,
+            fontSize: 16,
             fontWeight: FontWeight.w600,
             color: AppColors.textMedium,
           ),
         ),
-        const SizedBox(height: 8),
+        const SizedBox(height: 10),
         GestureDetector(
           onTap: () {
             showDialog(
@@ -172,7 +212,7 @@ class PanelLeft extends StatelessWidget {
                           child: const Text(
                             'Haltestelle wählen',
                             style: TextStyle(
-                              fontSize: 18,
+                              fontSize: 20,
                               fontWeight: FontWeight.w700,
                               color: AppColors.white,
                             ),
@@ -191,7 +231,7 @@ class PanelLeft extends StatelessWidget {
                                 title: Text(
                                   stations[index],
                                   style: const TextStyle(
-                                    fontSize: 16,
+                                    fontSize: 18,
                                     fontWeight: FontWeight.w500,
                                     color: AppColors.textDark,
                                   ),
@@ -216,14 +256,14 @@ class PanelLeft extends StatelessWidget {
             controller: toController,
             enabled: false,
             style: const TextStyle(
-              fontSize: 16,
+              fontSize: 18,
               fontWeight: FontWeight.w500,
               color: AppColors.textDark,
             ),
             decoration: InputDecoration(
               hintText: 'Ziel wählen...',
               hintStyle: const TextStyle(
-                fontSize: 16,
+                fontSize: 18,
                 color: AppColors.textMedium,
               ),
               filled: true,
@@ -244,7 +284,7 @@ class PanelLeft extends StatelessWidget {
                 borderRadius: BorderRadius.circular(4),
                 borderSide: const BorderSide(color: AppColors.primary, width: 2),
               ),
-              contentPadding: const EdgeInsets.all(15),
+              contentPadding: const EdgeInsets.all(17),
               prefixIcon: const Icon(
                 Icons.location_on,
                 color: AppColors.primary,
@@ -259,7 +299,8 @@ class PanelLeft extends StatelessWidget {
   Widget _buildTripDetails() {
     if (toController.text.isEmpty) {
       return Container(
-        padding: const EdgeInsets.all(20),
+        width: double.infinity,
+        padding: const EdgeInsets.all(15),
         decoration: BoxDecoration(
           color: AppColors.white,
           border: Border.all(color: AppColors.border),
@@ -284,29 +325,36 @@ class PanelLeft extends StatelessWidget {
     final stops = isLongDistance ? 12 : 3;
     final price = isLongDistance ? 5.30 : 3.20;
 
-    return Container(
-      padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        color: AppColors.white,
-        border: Border.all(color: AppColors.border),
-        borderRadius: BorderRadius.circular(4),
-        boxShadow: [
-          BoxShadow(
-            color: AppColors.black.withValues(alpha: 0.05),
-            blurRadius: 5,
-            offset: const Offset(0, 2),
+    return Column(
+      mainAxisSize: MainAxisSize.max,
+      children: [
+        Container(
+          width: double.infinity,
+          padding: const EdgeInsets.all(15),
+          decoration: BoxDecoration(
+            color: AppColors.white,
+            border: Border.all(color: AppColors.border),
+            borderRadius: BorderRadius.circular(4),
+            boxShadow: [
+              BoxShadow(
+                color: AppColors.black.withValues(alpha: 0.05),
+                blurRadius: 5,
+                offset: const Offset(0, 2),
+              ),
+            ],
           ),
-        ],
-      ),
-      child: Column(
-        children: [
-          _buildInfoRow('⏱️ Fahrtzeit', '$duration Min'),
-          const Divider(height: 25, color: AppColors.divider),
-          _buildInfoRow('🚏 Zwischenstopps', '$stops Haltestellen'),
-          const Divider(height: 25, color: AppColors.divider),
-          _buildInfoRow('💶 Ticketpreis', '${price.toStringAsFixed(2).replaceAll('.', ',')} €', isPrice: true),
-        ],
-      ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              _buildInfoRow('⏱️ Fahrtzeit', '$duration Min'),
+              const Divider(height: 20, color: AppColors.divider),
+              _buildInfoRow('🚏 Zwischenstopps', '$stops Haltestellen'),
+              const Divider(height: 20, color: AppColors.divider),
+              _buildInfoRow('💶 Ticketpreis', '${price.toStringAsFixed(2).replaceAll('.', ',')} €', isPrice: true),
+            ],
+          ),
+        ),
+      ],
     );
   }
 
@@ -317,7 +365,7 @@ class PanelLeft extends StatelessWidget {
         Text(
           label,
           style: const TextStyle(
-            fontSize: 15,
+            fontSize: 17,
             color: AppColors.textMedium,
             fontWeight: FontWeight.w600,
           ),
@@ -325,7 +373,7 @@ class PanelLeft extends StatelessWidget {
         Text(
           value,
           style: TextStyle(
-            fontSize: isPrice ? 20 : 16,
+            fontSize: isPrice ? 22 : 18,
             fontWeight: FontWeight.w700,
             color: isPrice ? AppColors.primary : AppColors.textDark,
           ),

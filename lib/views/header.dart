@@ -7,7 +7,7 @@ class Header extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 18),
+      padding: const EdgeInsets.symmetric(horizontal: 38, vertical: 22),
       decoration: BoxDecoration(
         color: AppColors.primary,
         boxShadow: [
@@ -24,43 +24,43 @@ class Header extends StatelessWidget {
           Row(
             children: [
               Container(
-                width: 55,
-                height: 55,
+                width: 67,
+                height: 67,
                 decoration: BoxDecoration(
                   color: AppColors.white,
-                  borderRadius: BorderRadius.circular(4),
+                  borderRadius: BorderRadius.circular(5),
                 ),
                 child: const Center(
                   child: Text(
-                    'KVB',
+                    'KDK',
                     style: TextStyle(
                       color: AppColors.primary,
-                      fontSize: 18,
+                      fontSize: 22,
                       fontWeight: FontWeight.w900,
                       letterSpacing: 1,
                     ),
                   ),
                 ),
               ),
-              const SizedBox(width: 15),
+              const SizedBox(width: 18),
               const Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'KVB Ticketautomat',
+                    'KDK Ticketautomat',
                     style: TextStyle(
                       color: AppColors.white,
-                      fontSize: 26,
+                      fontSize: 32,
                       fontWeight: FontWeight.w700,
                       letterSpacing: 0.3,
                     ),
                   ),
                   SizedBox(height: 3),
                   Text(
-                    'VRS-Verbundgebiet Köln',
+                    'Kollektiv-Verbundgebiet Köln',
                     style: TextStyle(
                       color: AppColors.white,
-                      fontSize: 13,
+                      fontSize: 16,
                       fontWeight: FontWeight.w400,
                     ),
                   ),
@@ -73,20 +73,20 @@ class Header extends StatelessWidget {
             style: ElevatedButton.styleFrom(
               backgroundColor: AppColors.white,
               foregroundColor: AppColors.primary,
-              padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 12),
+              padding: const EdgeInsets.symmetric(horizontal: 35, vertical: 15),
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(4),
+                borderRadius: BorderRadius.circular(5),
               ),
               elevation: 2,
             ),
             child: const Row(
               children: [
-                Text('❓', style: TextStyle(fontSize: 15)),
-                SizedBox(width: 8),
+                Text('❓', style: TextStyle(fontSize: 18)),
+                SizedBox(width: 10),
                 Text(
                   'Hilfe-Center',
                   style: TextStyle(
-                    fontSize: 15,
+                    fontSize: 18,
                     fontWeight: FontWeight.w700,
                   ),
                 ),
