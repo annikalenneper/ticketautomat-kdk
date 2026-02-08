@@ -15,24 +15,22 @@ class PanelLeft extends StatelessWidget {
     return Expanded(
       child: Container(
         padding: const EdgeInsets.all(20),
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           color: AppColors.backgroundLight,
-          border: Border(
-            right: BorderSide(color: AppColors.border, width: 2),
-          ),
+          border: Border.all(color: AppColors.black, width: 2),
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           mainAxisSize: MainAxisSize.max,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _buildSectionTitle('🚉 IHRE REISE'),
+            _buildSectionTitle('🚉 REISEPLANUNG'),
             const SizedBox(height: 10),
             _buildFixedStartStation(),
             const SizedBox(height: 12),
             _buildDestinationInput(context),
             const SizedBox(height: 20),
-            _buildSectionTitle('ℹ️ FAHRTINFORMATIONEN', fontSize: 18),
+            _buildSectionTitle('ℹ️ FAHRTPREIS', fontSize: 18),
             const SizedBox(height: 10),
             Expanded(
               child: _buildTripDetails(),
@@ -61,16 +59,19 @@ class PanelLeft extends StatelessWidget {
                   backgroundColor: AppColors.secondary,
                   foregroundColor: AppColors.white,
                   padding: const EdgeInsets.symmetric(vertical: 16),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(4),
+                  elevation: 6,
+                  shadowColor: AppColors.black,
+                  shape: const ContinuousRectangleBorder(
+                    side: BorderSide(color: AppColors.black, width: 2),
                   ),
-                  disabledBackgroundColor: AppColors.inputBorder,
+                  disabledBackgroundColor: AppColors.border,
                 ),
                 child: const Text(
-                  'Mit der Buchung fortfahren',
+                  'BUCHUNG FORTSETZEN',
                   style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w700,
+                    fontSize: 20,
+                    fontWeight: FontWeight.w900,
+                    letterSpacing: 2,
                   ),
                 ),
               ),
@@ -83,19 +84,28 @@ class PanelLeft extends StatelessWidget {
 
   Widget _buildSectionTitle(String title, {double fontSize = 19}) {
     return Container(
-      padding: const EdgeInsets.only(bottom: 12),
+      width: double.infinity,
+      padding: const EdgeInsets.all(8),
       decoration: const BoxDecoration(
+        color: AppColors.primary,
         border: Border(
-          bottom: BorderSide(color: AppColors.primary, width: 3),
+          bottom: BorderSide(color: AppColors.black, width: 2),
+          right: BorderSide(color: AppColors.black, width: 2),
         ),
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.black,
+            offset: Offset(4, 4),
+          ),
+        ],
       ),
       child: Text(
-        title,
+        title.toUpperCase(),
         style: TextStyle(
           fontSize: fontSize,
-          fontWeight: FontWeight.w700,
-          color: AppColors.textDark,
-          letterSpacing: 0.5,
+          fontWeight: FontWeight.w800,
+          color: AppColors.white,
+          letterSpacing: 1.5,
         ),
       ),
     );
@@ -106,49 +116,59 @@ class PanelLeft extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Text(
-          'Von (Start-Haltestelle)',
+          'STANDORT (START)',
           style: TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w600,
-            color: AppColors.textMedium,
-          ),
-        ),
-        const SizedBox(height: 10),
-        TextField(
-          enabled: false,
-          style: const TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.w500,
+            fontSize: 14,
+            fontWeight: FontWeight.w800,
             color: AppColors.textDark,
           ),
-          decoration: InputDecoration(
-            hintText: 'BüZe Ehrenfeld',
-            hintStyle: const TextStyle(
+        ),
+        const SizedBox(height: 5),
+        Container(
+          decoration: const BoxDecoration(
+            boxShadow: [
+              BoxShadow(
+                color: AppColors.black,
+                offset: Offset(4, 4),
+              ),
+            ],
+          ),
+          child: TextField(
+            enabled: false,
+            style: const TextStyle(
               fontSize: 18,
-              color: AppColors.textMedium,
+              fontWeight: FontWeight.w700,
+              color: AppColors.textDark,
             ),
-            filled: true,
-            fillColor: AppColors.white,
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(4),
-              borderSide: const BorderSide(color: AppColors.inputBorder, width: 2),
-            ),
-            enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(4),
-              borderSide: const BorderSide(color: AppColors.inputBorder, width: 2),
-            ),
-            disabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(4),
-              borderSide: const BorderSide(color: AppColors.inputBorder, width: 2),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(4),
-              borderSide: const BorderSide(color: AppColors.primary, width: 2),
-            ),
+            decoration: InputDecoration(
+              hintText: 'BüZe Ehrenfeld (Unten durch West)',
+              hintStyle: const TextStyle(
+                fontSize: 18,
+                color: AppColors.textMedium,
+              ),
+              filled: true,
+              fillColor: AppColors.white,
+              border: const OutlineInputBorder(
+                borderRadius: BorderRadius.zero,
+                borderSide: BorderSide(color: AppColors.black, width: 2),
+              ),
+              enabledBorder: const OutlineInputBorder(
+                borderRadius: BorderRadius.zero,
+                borderSide: BorderSide(color: AppColors.black, width: 2),
+              ),
+              disabledBorder: const OutlineInputBorder(
+                borderRadius: BorderRadius.zero,
+                borderSide: BorderSide(color: AppColors.black, width: 2),
+              ),
+              focusedBorder: const OutlineInputBorder(
+                borderRadius: BorderRadius.zero,
+                borderSide: BorderSide(color: AppColors.black, width: 3),
+              ),
               contentPadding: const EdgeInsets.all(17),
-            prefixIcon: const Icon(
-              Icons.start,
-              color: AppColors.primary,
+              prefixIcon: const Icon(
+                Icons.home_work,
+                color: AppColors.black,
+              ),
             ),
           ),
         ),
@@ -159,42 +179,41 @@ class PanelLeft extends StatelessWidget {
   Widget _buildDestinationInput(BuildContext context) {
     const stations = [
       'Hauptbahnhof',
-      'Köln Messe',
+      'Oben drüber',
       'Appellhofplatz',
-      'Rudolfplatz',
-      'Friesenplatz',
-      'Mülheim Bahnhof',
-      'Kalk Mülheimer Str.',
-      'Kalk Kapelle',
-      'Neustadt/Nord',
-      'Nippes Straßenbahn',
+      'Bielefeld',
+      'Metropolis',
+      'In die Vergangenheit',
+      'Streichelzoo',
+      'Neptunbad',
+      'Zu mir oder zu dir',
+      'Ab nach Hause',
     ];
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Text(
-          'Nach (Ziel-Haltestelle)',
+          'ZIEL-HALTESTELLE',
           style: TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w600,
-            color: AppColors.textMedium,
+            fontSize: 14,
+            fontWeight: FontWeight.w800,
+            color: AppColors.textDark,
           ),
         ),
-        const SizedBox(height: 10),
+        const SizedBox(height: 5),
         GestureDetector(
           onTap: () {
             showDialog(
               context: context,
               builder: (BuildContext context) {
                 return Dialog(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
+                  shape: const ContinuousRectangleBorder(
+                    side: BorderSide(color: AppColors.black, width: 3),
                   ),
                   child: Container(
-                    decoration: BoxDecoration(
-                      color: AppColors.white,
-                      borderRadius: BorderRadius.circular(8),
+                    decoration: const BoxDecoration(
+                      color: AppColors.backgroundLight,
                     ),
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
@@ -203,18 +222,18 @@ class PanelLeft extends StatelessWidget {
                           width: double.infinity,
                           padding: const EdgeInsets.all(20),
                           decoration: const BoxDecoration(
-                            color: AppColors.primary,
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(8),
-                              topRight: Radius.circular(8),
+                            color: AppColors.secondary,
+                            border: Border(
+                              bottom: BorderSide(color: AppColors.black, width: 2),
                             ),
                           ),
                           child: const Text(
-                            'Haltestelle wählen',
+                            'HALTESTELLE WÄHLEN',
                             style: TextStyle(
                               fontSize: 20,
-                              fontWeight: FontWeight.w700,
+                              fontWeight: FontWeight.w900,
                               color: AppColors.white,
+                              letterSpacing: 1,
                             ),
                           ),
                         ),
@@ -226,13 +245,13 @@ class PanelLeft extends StatelessWidget {
                               return ListTile(
                                 leading: const Icon(
                                   Icons.location_on,
-                                  color: AppColors.primary,
+                                  color: AppColors.black,
                                 ),
                                 title: Text(
                                   stations[index],
                                   style: const TextStyle(
                                     fontSize: 18,
-                                    fontWeight: FontWeight.w500,
+                                    fontWeight: FontWeight.w700,
                                     color: AppColors.textDark,
                                   ),
                                 ),
@@ -252,42 +271,49 @@ class PanelLeft extends StatelessWidget {
               },
             );
           },
-          child: TextField(
-            controller: toController,
-            enabled: false,
-            style: const TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.w500,
-              color: AppColors.textDark,
+          child: Container(
+            decoration: const BoxDecoration(
+              boxShadow: [
+                BoxShadow(
+                  color: AppColors.black,
+                  offset: Offset(4, 4),
+                ),
+              ],
             ),
-            decoration: InputDecoration(
-              hintText: 'Ziel wählen...',
-              hintStyle: const TextStyle(
+            child: TextField(
+              controller: toController,
+              enabled: false,
+              style: const TextStyle(
                 fontSize: 18,
-                color: AppColors.textMedium,
+                fontWeight: FontWeight.w700,
+                color: AppColors.textDark,
               ),
-              filled: true,
-              fillColor: AppColors.white,
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(4),
-                borderSide: const BorderSide(color: AppColors.inputBorder, width: 2),
-              ),
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(4),
-                borderSide: const BorderSide(color: AppColors.inputBorder, width: 2),
-              ),
-              disabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(4),
-                borderSide: const BorderSide(color: AppColors.inputBorder, width: 2),
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(4),
-                borderSide: const BorderSide(color: AppColors.primary, width: 2),
-              ),
-              contentPadding: const EdgeInsets.all(17),
-              prefixIcon: const Icon(
-                Icons.location_on,
-                color: AppColors.primary,
+              decoration: InputDecoration(
+                hintText: 'ZUR AUSWAHL TIPPEN...',
+                hintStyle: const TextStyle(
+                  fontSize: 18,
+                  color: AppColors.textMedium,
+                  fontWeight: FontWeight.w800,
+                ),
+                filled: true,
+                fillColor: AppColors.white,
+                border: const OutlineInputBorder(
+                  borderRadius: BorderRadius.zero,
+                  borderSide: BorderSide(color: AppColors.black, width: 2),
+                ),
+                enabledBorder: const OutlineInputBorder(
+                  borderRadius: BorderRadius.zero,
+                  borderSide: BorderSide(color: AppColors.black, width: 2),
+                ),
+                disabledBorder: const OutlineInputBorder(
+                  borderRadius: BorderRadius.zero,
+                  borderSide: BorderSide(color: AppColors.black, width: 2),
+                ),
+                contentPadding: const EdgeInsets.all(17),
+                prefixIcon: const Icon(
+                  Icons.search,
+                  color: AppColors.black,
+                ),
               ),
             ),
           ),
@@ -303,16 +329,23 @@ class PanelLeft extends StatelessWidget {
         padding: const EdgeInsets.all(15),
         decoration: BoxDecoration(
           color: AppColors.white,
-          border: Border.all(color: AppColors.border),
-          borderRadius: BorderRadius.circular(4),
+          border: Border.all(color: AppColors.black, width: 2),
+          boxShadow: const [
+            BoxShadow(
+              color: AppColors.black,
+              offset: Offset(4, 4),
+            ),
+          ],
         ),
         child: const Center(
           child: Text(
-            'Bitte wählen Sie eine Zielhaltestelle aus, um Fahrtinformationen zu sehen.',
+            'SYSTEM BEREIT.\nBITTE ZIELHALTESTELLE EINGEBEN.',
             textAlign: TextAlign.center,
             style: TextStyle(
-              color: AppColors.textMedium,
+              color: AppColors.textDark,
               fontSize: 14,
+              fontWeight: FontWeight.w800,
+              height: 1.5,
             ),
           ),
         ),
@@ -333,24 +366,22 @@ class PanelLeft extends StatelessWidget {
           padding: const EdgeInsets.all(15),
           decoration: BoxDecoration(
             color: AppColors.white,
-            border: Border.all(color: AppColors.border),
-            borderRadius: BorderRadius.circular(4),
-            boxShadow: [
+            border: Border.all(color: AppColors.black, width: 2),
+            boxShadow: const [
               BoxShadow(
-                color: AppColors.black.withValues(alpha: 0.05),
-                blurRadius: 5,
-                offset: const Offset(0, 2),
+                color: AppColors.black,
+                offset: Offset(4, 4),
               ),
             ],
           ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              _buildInfoRow('⏱️ Fahrtzeit', '$duration Min'),
-              const Divider(height: 20, color: AppColors.divider),
-              _buildInfoRow('🚏 Zwischenstopps', '$stops Haltestellen'),
-              const Divider(height: 20, color: AppColors.divider),
-              _buildInfoRow('💶 Ticketpreis', '${price.toStringAsFixed(2).replaceAll('.', ',')} €', isPrice: true),
+              _buildInfoRow('⏱️ ZEIT', '$duration MIN'),
+              const Divider(height: 20, color: AppColors.black, thickness: 1),
+              _buildInfoRow('🚏 STOPPS', '$stops HTS.'),
+              const Divider(height: 20, color: AppColors.black, thickness: 1),
+              _buildInfoRow('💶 PREIS', '${price.toStringAsFixed(2).replaceAll('.', ',')} EUR', isPrice: true),
             ],
           ),
         ),

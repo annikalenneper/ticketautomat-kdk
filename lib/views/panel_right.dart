@@ -7,11 +7,11 @@ class PanelRight extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: Container(
-        padding: const EdgeInsets.all(25),
-        color: AppColors.backgroundUltraLight,
-        child: const SizedBox.shrink(),
-      ),
+      
+      child: Column(
+
+
+        ),
     );
   }
 }

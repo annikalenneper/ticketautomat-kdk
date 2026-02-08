@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ticket_alternative/styles/app_colors.dart';
+import '../views/hilfecenter.dart';
 
 class Header extends StatelessWidget {
   const Header({super.key});
@@ -8,15 +9,11 @@ class Header extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 38, vertical: 22),
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         color: AppColors.primary,
-        boxShadow: [
-          BoxShadow(
-            color: AppColors.black.withValues(alpha: 0.2),
-            blurRadius: 10,
-            offset: const Offset(0, 3),
-          ),
-        ],
+        border: Border(
+          bottom: BorderSide(color: AppColors.black, width: 2),
+        ),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -24,22 +21,14 @@ class Header extends StatelessWidget {
           Row(
             children: [
               Container(
-                width: 67,
                 height: 67,
                 decoration: BoxDecoration(
                   color: AppColors.white,
-                  borderRadius: BorderRadius.circular(5),
+                  border: Border.all(color: AppColors.black, width: 2),
                 ),
-                child: const Center(
-                  child: Text(
-                    'KDK',
-                    style: TextStyle(
-                      color: AppColors.primary,
-                      fontSize: 22,
-                      fontWeight: FontWeight.w900,
-                      letterSpacing: 1,
-                    ),
-                  ),
+                child: Image.asset(
+                  'lib/img/LOGO.jpeg',
+                  fit: BoxFit.fitHeight,
                 ),
               ),
               const SizedBox(width: 18),
@@ -69,19 +58,25 @@ class Header extends StatelessWidget {
             ],
           ),
           ElevatedButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const HilfeCenter()),
+              );
+            },
             style: ElevatedButton.styleFrom(
-              backgroundColor: AppColors.white,
-              foregroundColor: AppColors.primary,
+              backgroundColor: AppColors.backgroundLight,
+              foregroundColor: AppColors.black,
               padding: const EdgeInsets.symmetric(horizontal: 35, vertical: 15),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(5),
+              elevation: 4,
+              shadowColor: AppColors.black,
+              shape: const ContinuousRectangleBorder(
+                side: BorderSide(color: AppColors.black, width: 2),
               ),
-              elevation: 2,
             ),
             child: const Row(
               children: [
-                Text('❓', style: TextStyle(fontSize: 18)),
+                Text('?', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                 SizedBox(width: 10),
                 Text(
                   'Hilfe-Center',

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'dart:async';
 import 'package:ticket_alternative/styles/app_colors.dart';
-import 'package:ticket_alternative/views/header.dart';
+import 'package:ticket_alternative/headers/main_header.dart';
 import 'package:ticket_alternative/views/panel_left.dart';
 import 'package:ticket_alternative/views/panel_right.dart';
 
@@ -34,6 +35,7 @@ class TicketautomatScreen extends StatefulWidget {
 
 class _TicketautomatScreenState extends State<TicketautomatScreen> {
   final TextEditingController toController = TextEditingController();
+  Timer? _resetTimer;
 
   @override
   void initState() {
@@ -43,12 +45,19 @@ class _TicketautomatScreenState extends State<TicketautomatScreen> {
 
   void _updateTripInfo() {
     setState(() {});
+
+    _resetTimer?.cancel();
+    if (toController.text.isNotEmpty) {
+      _resetTimer = Timer(const Duration(seconds: 30), () {
+        toController.clear();
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.white,
+      backgroundColor: AppColors.backgroundLight,
       body: Column(
         children: [
           const Header(),
@@ -69,6 +78,7 @@ class _TicketautomatScreenState extends State<TicketautomatScreen> {
 
   @override
   void dispose() {
+    _resetTimer?.cancel();
     toController.dispose();
     super.dispose();
   }
