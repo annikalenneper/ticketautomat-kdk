@@ -6,13 +6,13 @@ import 'ticket_template.dart';
 class PrinterDialog extends StatefulWidget {
   final String from;
   final String to;
-  final double price;
+  final String preis;
 
   const PrinterDialog({
     super.key,
     required this.from,
     required this.to,
-    required this.price,
+    required this.preis,
   });
 
   @override
@@ -70,7 +70,7 @@ class _PrinterDialogState extends State<PrinterDialog> {
         from: widget.from,
         to: widget.to,
         dateTime: DateTime.now(),
-        price: widget.price,
+        preis: widget.preis,
         ticketType: 'Einzelticket',
       );
 

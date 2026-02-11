@@ -36,6 +36,7 @@ dependencies:
   cupertino_icons: ^1.0.8
   esc_pos_utils_plus: ^2.0.4
   print_bluetooth_thermal: ^1.1.9
+  image: ^4.1.0
 
 dev_dependencies:
   flutter_test:
@@ -64,6 +65,8 @@ flutter:
     - lib/img/LOGO.jpeg
     - lib/assets/timetable.json
     - lib/assets/coc.json
+    - lib/assets/haltestellen.json
+    - lib/assets/quests.json
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

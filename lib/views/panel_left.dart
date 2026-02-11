@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ticket_alternative/styles/app_colors.dart';
 import 'package:ticket_alternative/printservice/printer_dialog.dart';
+import 'package:ticket_alternative/models/haltestelle.dart';
 
 class PanelLeft extends StatelessWidget {
   final TextEditingController toController;
@@ -50,16 +51,16 @@ class PanelLeft extends StatelessWidget {
                 onPressed: toController.text.isEmpty
                     ? null
                     : () {
-                        // Berechne Preis basierend auf Destination
-                        final isLongDistance = toController.text.length > 5;
-                        final price = isLongDistance ? 5.30 : 3.20;
+                        // Hole Preis aus JSON-Daten
+                        final haltestelle = HaltestellenService.findByName(toController.text);
+                        final preisString = haltestelle?.preis ?? '0';
 
                         showDialog(
                           context: context,
                           builder: (context) => PrinterDialog(
-                            from: 'BüZe Ehrenfeld',
+                            from: 'BüZe Ehrenfeld - Unten durch (West)',
                             to: toController.text,
-                            price: price,
+                            preis: preisString,
                           ),
                         );
                       },
@@ -149,7 +150,7 @@ class PanelLeft extends StatelessWidget {
               color: AppColors.textDark,
             ),
             decoration: InputDecoration(
-              hintText: 'BüZe Ehrenfeld (Unten durch West)',
+              hintText: 'BüZe Ehrenfeld - Unten durch (West)',
               hintStyle: const TextStyle(
                 fontSize: 18,
                 color: AppColors.textMedium,
@@ -185,19 +186,6 @@ class PanelLeft extends StatelessWidget {
   }
 
   Widget _buildDestinationInput(BuildContext context) {
-    const stations = [
-      'Hauptbahnhof',
-      'Oben drüber',
-      'Appellhofplatz',
-      'Bielefeld',
-      'Metropolis',
-      'In die Vergangenheit',
-      'Streichelzoo',
-      'Neptunbad',
-      'Zu mir oder zu dir',
-      'Ab nach Hause',
-    ];
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -211,7 +199,9 @@ class PanelLeft extends StatelessWidget {
         ),
         const SizedBox(height: 5),
         GestureDetector(
-          onTap: () {
+          onTap: () async {
+            final haltestellen = await HaltestellenService.loadHaltestellen();
+            if (!context.mounted) return;
             showDialog(
               context: context,
               builder: (BuildContext context) {
@@ -248,15 +238,16 @@ class PanelLeft extends StatelessWidget {
                         Flexible(
                           child: ListView.builder(
                             shrinkWrap: true,
-                            itemCount: stations.length,
+                            itemCount: haltestellen.length,
                             itemBuilder: (context, index) {
+                              final station = haltestellen[index];
                               return ListTile(
                                 leading: const Icon(
                                   Icons.location_on,
                                   color: AppColors.black,
                                 ),
                                 title: Text(
-                                  stations[index],
+                                  station.name,
                                   style: const TextStyle(
                                     fontSize: 18,
                                     fontWeight: FontWeight.w700,
@@ -264,7 +255,7 @@ class PanelLeft extends StatelessWidget {
                                   ),
                                 ),
                                 onTap: () {
-                                  toController.text = stations[index];
+                                  toController.text = station.name;
                                   Navigator.pop(context);
                                 },
                                 hoverColor: AppColors.backgroundUltraLight,
@@ -360,11 +351,11 @@ class PanelLeft extends StatelessWidget {
       );
     }
 
-    // Dummy logic depending on destination
-    final isLongDistance = toController.text.length > 5;
-    final duration = isLongDistance ? 45 : 12;
-    final stops = isLongDistance ? 12 : 3;
-    final price = isLongDistance ? 5.30 : 3.20;
+    // Hole Daten aus der JSON
+    final haltestelle = HaltestellenService.findByName(toController.text);
+    final fahrzeit = haltestelle?.fahrzeit ?? 'Unbekannt';
+    final stops = haltestelle?.zwischenstopps ?? 0;
+    final preis = haltestelle?.preis ?? 'Unbekannt';
 
     return Column(
       mainAxisSize: MainAxisSize.max,
@@ -385,11 +376,11 @@ class PanelLeft extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              _buildInfoRow('⏱️ ZEIT', '$duration MIN'),
+              _buildInfoRow('⏱️ ZEIT', fahrzeit),
               const Divider(height: 20, color: AppColors.black, thickness: 1),
               _buildInfoRow('🚏 STOPPS', '$stops HTS.'),
               const Divider(height: 20, color: AppColors.black, thickness: 1),
-              _buildInfoRow('💶 PREIS', '${price.toStringAsFixed(2).replaceAll('.', ',')} EUR', isPrice: true),
+              _buildInfoRow('💶 PREIS', preis, isPrice: true),
             ],
           ),
         ),

@@ -54,6 +54,22 @@ class PrintService {
     }
   }
 
+  /// Minimaler Drucktest - nur "Test" drucken
+  Future<bool> printTest() async {
+    if (!_isConnected) {
+      throw Exception('Drucker nicht verbunden');
+    }
+
+    try {
+      List<int> bytes = [];
+      bytes += PostCode.text(text: 'Test', align: AlignPos.left);
+      bytes += PostCode.enter();
+      return await PrintBluetoothThermal.writeBytes(bytes);
+    } catch (e) {
+      throw Exception('Drucktest fehlgeschlagen: $e');
+    }
+  }
+
   /// Drucke ein Ticket
   Future<bool> printTicket(TicketData ticketData) async {
     if (!_isConnected) {
@@ -113,7 +129,7 @@ class PrintService {
       fontSize: FontSize.compressed,
     );
     bytes += PostCode.text(
-      text: 'Preis: ${ticketData.formattedPrice}',
+      text: 'Preis: ${ticketData.preis}',
       fontSize: FontSize.compressed,
     );
     bytes += PostCode.enter();
@@ -150,6 +166,19 @@ class PrintService {
       return result;
     } catch (e) {
       return false;
+    }
+  }
+
+  /// Drucke rohe Bytes (für Quest-Tickets etc.)
+  Future<bool> printRawBytes(List<int> bytes) async {
+    if (!_isConnected) {
+      throw Exception('Drucker nicht verbunden');
+    }
+
+    try {
+      return await PrintBluetoothThermal.writeBytes(bytes);
+    } catch (e) {
+      throw Exception('Fehler beim Drucken: $e');
     }
   }
 

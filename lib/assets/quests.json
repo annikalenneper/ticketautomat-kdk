@@ -1,0 +1,88 @@
+{
+  "quests": [
+    {
+      "kategorie": "Interaktion",
+      "aufgabe": "Finde eine Person mit einer Perücke und frage sie nach ihrem Act heute."
+    },
+    {
+      "kategorie": "Schnitzeljagd",
+      "aufgabe": "In welcher Bahn bist du gerade?"
+    },
+    {
+      "kategorie": "Interaktion",
+      "aufgabe": "Wie viele Leute passen in den Fotoautomat?"
+    },
+    {
+      "kategorie": "Schnitzeljagd",
+      "aufgabe": "Welcher Snack am Kiosk auf dem Marktplatz ist dein Lieblingssnack?"
+    },
+    {
+      "kategorie": "Interaktion",
+      "aufgabe": "Verschenke einen Kaugummi aus dem Automat."
+    },
+    {
+      "kategorie": "Schnitzeljagd",
+      "aufgabe": "Wo ist der Secret Floor?"
+    },
+    {
+      "kategorie": "Interaktion",
+      "aufgabe": "Finde drei Personen, die zu deinem Kostüm passen."
+    },
+    {
+      "kategorie": "Schnitzeljagd",
+      "aufgabe": "Wie viele Tauben findest du?"
+    },
+    {
+      "kategorie": "Interaktion",
+      "aufgabe": "Finde eine Person mit einem Kostüm-Match und macht ein Foto im Automat."
+    },
+    {
+      "kategorie": "Schnitzeljagd",
+      "aufgabe": "Wie viele Zeppeline fliegen heute?"
+    },
+    {
+      "kategorie": "Interaktion",
+      "aufgabe": "Wurde dein Ticket schon kontrolliert? Geh zur SchaffnerIn"
+    },
+    {
+      "kategorie": "Interaktion",
+      "aufgabe": "Du hast deine Tasche in der Bahn verloren. Erzähle einer MitarbeiterIn davon."
+    },
+    {
+      "kategorie": "Schnitzeljagd",
+      "aufgabe": "Hast du noch frischen Atem? Hol dir nen Kaugummi am Automat."
+    },
+    {
+      "kategorie": "Interaktion",
+      "aufgabe": "Mach jemandem ein ehrliches Kompliment."
+    },
+    {
+      "kategorie": "Schnitzeljagd",
+      "aufgabe": "Ruf jemand in der Telefonzelle an. Nummern findest du im Buch."
+    },
+    {
+      "kategorie": "Interaktion",
+      "aufgabe": "Finde jemanden mit dem gleichen Lieblingsgetränk wie du."
+    },
+    {
+      "kategorie": "Schnitzeljagd",
+      "aufgabe": "Zähle die Fenster an den Fassaden."
+    },
+    {
+      "kategorie": "Interaktion",
+      "aufgabe": "Tausche ein Accessoire mit einer fremden Person."
+    },
+    {
+      "kategorie": "Schnitzeljagd",
+      "aufgabe": "Wo ist der nächste Halt? Check den Fahrplan"
+    },
+    {
+      "kategorie": "Interaktion",
+      "aufgabe": "Bringe jemanden zum Lachen."
+    },
+    {
+      "kategorie": "Schnitzeljagd",
+      "aufgabe": "Welcher Sticker gefällt dir am besten?"
+    }
+  ]
+}

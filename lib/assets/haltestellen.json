@@ -1,0 +1,135 @@
+{
+  "haltestellen": [
+    {
+      "name": "Hauptbahnhof",
+      "preis": "8.20",
+      "fahrzeit": "21 Minuten",
+      "zwischenstopps": 3
+    },
+    {
+      "name": "Neumarkt",
+      "preis": "2.80",
+      "fahrzeit": "9 Minuten",
+      "zwischenstopps": 5
+    },
+	{
+      "name": "Oben drüber (Nord)",
+      "preis": "100€",
+      "fahrzeit": "Geh die Treppe hoch, du faules Schwein. :)",
+      "zwischenstopps": 4
+    },
+    {
+      "name": "BF Mülheim",
+      "preis": "Ein müder Schenkelklopfer",
+      "fahrzeit": "40 Minuten",
+      "zwischenstopps": 16,
+	  "dialog":"Umleitung: Heute fährt die 18 bis nach Istanbul."
+    },
+	{
+      "name": "Delirium",
+      "preis": "Dein Verstand",
+      "fahrzeit": "12 Stunden",
+      "zwischenstopps": 25
+    },
+	{
+      "name": "Bielefeld",
+      "preis": "4.90",
+      "fahrzeit": "00",
+      "zwischenstopps": 0,
+	  "dialog":"Error."
+    },
+	{
+      "name": "In die Vergangenheit",
+      "preis": "Jegliche Sicherheit",
+      "fahrzeit": "Du hast die Wahl",
+      "zwischenstopps": 5
+    },
+    {
+      "name": "In die Zukunft",
+      "preis": "Deine Lebenszeit",
+      "fahrzeit": "Weit genug",
+      "zwischenstopps": 5
+    },
+	{
+      "name": "Wiener Platz",
+      "preis": "3.65",
+      "fahrzeit": "Brücke offen oder zu? Je nachdem 5 Minuten oder 5 Stunden.",
+      "zwischenstopps": 18
+    },
+	{
+      "name": "Neptunbad",
+      "preis": "500",
+      "fahrzeit": "10 Gehminuten. Einmal durchlüften lassen.",
+      "zwischenstopps": 2
+    },
+	{
+      "name": "Milchstraße",
+      "preis": "Veganes Glitzer ohne Mikroplastik",
+      "fahrzeit": "2 Lichtjahre",
+      "zwischenstopps": 2,
+	  "dialog":"Heute nur per Anhalter durch die Galaxis."
+    },
+	{
+      "name": "Zu mir oder zu dir",
+      "preis": "3 Kondome",
+      "fahrzeit": "Hier könnte deine Handynummer stehen",
+      "zwischenstopps": 0
+    },
+	{
+      "name": "Streichelzoo",
+      "preis": "Liebe, Zuneigung und ein bisschen Heu",
+      "fahrzeit": "8 Minuten",
+      "zwischenstopps": 4
+    },
+	{
+      "name": "Ab nach Hause",
+      "preis": "Was hast du denn noch zu geben?",
+      "fahrzeit": "Hoffentlich nicht zu lang :)",
+      "zwischenstopps": 6,
+	  "dialog":"Hast du alles? Handy? Portmonee? Schlüssel?"
+    },
+	{
+      "name": "Mordor",
+      "preis": "Dein Ring",
+      "fahrzeit": "6 Monate",
+      "zwischenstopps": 3000
+    },
+	{
+      "name": "Endstation Eskalation",
+      "preis": "Deine Würde",
+      "fahrzeit": "5 Minuten",
+      "zwischenstopps": 5,
+	  "dialog":"Bist du sicher?"
+	},
+	{
+      "name": "Ende des Regenbogens",
+      "preis": "Ein bisschen Glitzer und Phantasie",
+      "fahrzeit": "14 Flugminuten",
+      "zwischenstopps": 0
+	},
+	{
+      "name": "Büdchenplatz",
+      "preis": "6€",
+      "fahrzeit": "3 Wegbier",
+      "zwischenstopps": 1
+	},
+	{
+      "name": "Klangquartier",
+      "preis": "Gute Laune",
+      "fahrzeit": "8 Minuten",
+      "zwischenstopps": 3
+	},
+	{
+      "name": "Terminal Tanzalarm",
+      "preis": "Nicht so viel",
+      "fahrzeit": "Hast du bequemes Schuhwerk an? Los gehts!",
+      "zwischenstopps": 5
+	},
+	{
+      "name": "Bass District",
+      "preis": "Ein Hörsturz",
+      "fahrzeit": "17 Minuten",
+      "zwischenstopps": 12
+    }
+  ]
+}
