@@ -6,6 +6,7 @@ import 'package:ticket_alternative/headers/main_header.dart';
 import 'package:ticket_alternative/views/panel_left.dart';
 import 'package:ticket_alternative/views/panel_right.dart';
 import 'package:ticket_alternative/printservice/defect_service.dart';
+import 'package:ticket_alternative/global_navigator.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -30,6 +31,7 @@ class KVBTicketautomatApp extends StatelessWidget {
         primaryColor: AppColors.primary,
       ),
       home: const DefectWrapper(child: TicketautomatScreen()),
+      navigatorKey: globalNavigatorKey,
     );
   }
 }
@@ -47,69 +49,71 @@ class DefectWrapper extends StatelessWidget {
           children: [
             cachedChild!,
             if (isDefect)
-              Positioned.fill(
-                child: Material(
-                  color: AppColors.backgroundLight,
-                  child: Center(
-                    child: Container(
-                      padding: const EdgeInsets.all(40),
-                      margin: const EdgeInsets.all(40),
-                      decoration: BoxDecoration(
-                        color: AppColors.white,
-                        border: Border.all(color: AppColors.black, width: 4),
-                        boxShadow: const [
-                          BoxShadow(
-                            color: AppColors.black,
-                            offset: Offset(10, 10),
-                          ),
-                        ],
-                      ),
-                      child: const Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Icon(
-                            Icons.warning_amber_rounded,
-                            color: AppColors.primary,
-                            size: 100,
-                          ),
-                          SizedBox(height: 30),
-                          Text(
-                            'AUSSER BETRIEB',
-                            style: TextStyle(
-                              fontSize: 42,
-                              fontWeight: FontWeight.w900,
+              // Defekt-Bildschirm darf nur erscheinen, wenn keine Dialoge mehr offen sind
+              if (!(globalNavigatorKey.currentState?.canPop() ?? false))
+                Positioned.fill(
+                  child: Material(
+                    color: AppColors.backgroundLight,
+                    child: Center(
+                      child: Container(
+                        padding: const EdgeInsets.all(40),
+                        margin: const EdgeInsets.all(40),
+                        decoration: BoxDecoration(
+                          color: AppColors.white,
+                          border: Border.all(color: AppColors.black, width: 4),
+                          boxShadow: const [
+                            BoxShadow(
+                              color: AppColors.black,
+                              offset: Offset(10, 10),
+                            ),
+                          ],
+                        ),
+                        child: const Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Icon(
+                              Icons.warning_amber_rounded,
                               color: AppColors.primary,
-                              decoration: TextDecoration.none,
+                              size: 100,
                             ),
-                          ),
-                          SizedBox(height: 20),
-                          Text(
-                            'DEFEKT - Wir arbeiten an einer Lösung.\n\nBitte besuchen Sie uns an einem anderen Automaten.\nWir entschuldigen uns für die Unannehmlichkeiten.',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.w700,
-                              color: AppColors.textDark,
-                              height: 1.5,
-                              decoration: TextDecoration.none,
+                            SizedBox(height: 30),
+                            Text(
+                              'AUSSER BETRIEB',
+                              style: TextStyle(
+                                fontSize: 42,
+                                fontWeight: FontWeight.w900,
+                                color: AppColors.primary,
+                                decoration: TextDecoration.none,
+                              ),
                             ),
-                          ),
-                          SizedBox(height: 40),
-                          Text(
-                            'KDK - Kölner Kollektiv-Betriebe AG',
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600,
-                              color: AppColors.textMedium,
-                              decoration: TextDecoration.none,
+                            SizedBox(height: 20),
+                            Text(
+                              'DEFEKT - Wir arbeiten an einer Lösung.\n\nBitte besuchen Sie uns an einem anderen Automaten.\nWir entschuldigen uns für die Unannehmlichkeiten.',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.w700,
+                                color: AppColors.textDark,
+                                height: 1.5,
+                                decoration: TextDecoration.none,
+                              ),
                             ),
-                          ),
-                        ],
+                            SizedBox(height: 40),
+                            Text(
+                              'KDK - Kölner Kollektiv-Betriebe AG',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600,
+                                color: AppColors.textMedium,
+                                decoration: TextDecoration.none,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
           ],
         );
       },

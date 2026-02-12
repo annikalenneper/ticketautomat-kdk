@@ -85,44 +85,41 @@ class PanelLeft extends StatelessWidget {
                         );
                         if (shouldPrint != true || !context.mounted) return;
 
-                        // Zeige "Druckt..."-Dialog
+                        // Zeige "Druckt..."-Dialog und warte auf dessen Schließen
+                        await showDialog(
+                          context: context,
+                          barrierDismissible: false,
+                          builder: (context) => FutureBuilder(
+                            future: () async {
+                              try {
+                                final ticketData = TicketData(
+                                  from: 'BüZe Ehrenfeld - Unten durch (West)',
+                                  to: toController.text,
+                                  dateTime: DateTime.now(),
+                                  preis: preisString,
+                                  fahrzeit: fahrzeitString,
+                                  ticketType: 'Einzelticket',
+                                );
+                                await PrintService().printTicket(ticketData);
+                                await Future.delayed(const Duration(seconds: 2));
+                              } catch (e) {}
+                            }(),
+                            builder: (context, snapshot) {
+                              if (snapshot.connectionState == ConnectionState.done) {
+                                // Schließe Dialog automatisch
+                                Future.microtask(() => Navigator.of(context).pop());
+                              }
+                              return const PrintingDialog();
+                            },
+                          ),
+                        );
+
+                        if (!context.mounted) return;
                         showDialog(
                           context: context,
                           barrierDismissible: false,
-                          builder: (context) => const PrintingDialog(),
+                          builder: (context) => const TicketReceiptDialog(),
                         );
-
-                        try {
-                          // Direkt drucken
-                          final ticketData = TicketData(
-                            from: 'BüZe Ehrenfeld - Unten durch (West)',
-                            to: toController.text,
-                            dateTime: DateTime.now(),
-                            preis: preisString,
-                            fahrzeit: fahrzeitString,
-                            ticketType: 'Einzelticket',
-                          );
-                          
-                          await PrintService().printTicket(ticketData);
-                          
-                          // Simuliere Druckvorgang
-                          await Future.delayed(const Duration(seconds: 2));
-                          
-                          if (context.mounted) {
-                            Navigator.of(context).pop(); // Schließe "Druckt..."-Dialog
-                            
-                            // Zeige "Entnehmen Sie Ihr Ticket"-Dialog
-                            showDialog(
-                              context: context,
-                              barrierDismissible: false,
-                              builder: (context) => const TicketReceiptDialog(),
-                            );
-                          }
-                        } catch (e) {
-                          if (context.mounted) {
-                            Navigator.of(context).pop(); // Schließe "Druckt..."-Dialog
-                          }
-                        }
                       },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.secondary,
