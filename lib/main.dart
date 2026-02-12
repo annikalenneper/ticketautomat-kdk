@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'dart:async';
 import 'package:ticket_alternative/styles/app_colors.dart';
 import 'package:ticket_alternative/headers/main_header.dart';
@@ -8,6 +9,10 @@ import 'package:ticket_alternative/printservice/defect_service.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  
+  // Versteckt die Android Statusbar und Navigationsleiste (Vollbildmodus)
+  SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
+  
   await DefectService().init();
   runApp(const KVBTicketautomatApp());
 }
@@ -37,13 +42,13 @@ class DefectWrapper extends StatelessWidget {
   Widget build(BuildContext context) {
     return ValueListenableBuilder<bool>(
       valueListenable: DefectService().isDefectActive,
-      builder: (context, isDefect, _) {
+      builder: (context, isDefect, cachedChild) {
         return Stack(
           children: [
-            child,
+            cachedChild!,
             if (isDefect)
               Positioned.fill(
-                child: Container(
+                child: Material(
                   color: AppColors.backgroundLight,
                   child: Center(
                     child: Container(
@@ -59,16 +64,16 @@ class DefectWrapper extends StatelessWidget {
                           ),
                         ],
                       ),
-                      child: Column(
+                      child: const Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          const Icon(
+                          Icon(
                             Icons.warning_amber_rounded,
                             color: AppColors.primary,
                             size: 100,
                           ),
-                          const SizedBox(height: 30),
-                          const Text(
+                          SizedBox(height: 30),
+                          Text(
                             'AUSSER BETRIEB',
                             style: TextStyle(
                               fontSize: 42,
@@ -77,8 +82,8 @@ class DefectWrapper extends StatelessWidget {
                               decoration: TextDecoration.none,
                             ),
                           ),
-                          const SizedBox(height: 20),
-                          const Text(
+                          SizedBox(height: 20),
+                          Text(
                             'DEFEKT - Wir arbeiten an einer Lösung.\n\nBitte besuchen Sie uns an einem anderen Automaten.\nWir entschuldigen uns für die Unannehmlichkeiten.',
                             textAlign: TextAlign.center,
                             style: TextStyle(
@@ -89,9 +94,9 @@ class DefectWrapper extends StatelessWidget {
                               decoration: TextDecoration.none,
                             ),
                           ),
-                          const SizedBox(height: 40),
-                          const Text(
-                            'KVB - Kölner Verkehrs-Betriebe AG',
+                          SizedBox(height: 40),
+                          Text(
+                            'KDK - Kölner Kollektiv-Betriebe AG',
                             style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.w600,
@@ -108,6 +113,7 @@ class DefectWrapper extends StatelessWidget {
           ],
         );
       },
+      child: child,
     );
   }
 }

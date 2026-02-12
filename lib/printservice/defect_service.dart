@@ -16,6 +16,7 @@ class DefectService {
   int _timeRunningMinutes = 30; // Default 30 min
   int _timeErrorMinutes = 5;    // Default 5 min
   bool _isEnabled = false;
+  bool _initialized = false;
 
   Timer? _cycleTimer;
 
@@ -24,6 +25,10 @@ class DefectService {
   bool get isEnabled => _isEnabled;
 
   Future<void> init() async {
+    // Verhindere doppelte Initialisierung (z.B. nach App-Resume)
+    if (_initialized) return;
+    _initialized = true;
+    
     final prefs = await SharedPreferences.getInstance();
     _timeRunningMinutes = prefs.getInt(_keyRunning) ?? 30;
     _timeErrorMinutes = prefs.getInt(_keyError) ?? 5;
@@ -59,14 +64,18 @@ class DefectService {
   }
 
   void _scheduleDefect() {
-    _cycleTimer = Timer(Duration(minutes: _timeRunningMinutes), () {
+    // Sicherstellen, dass die Zeit mindestens 1 Minute beträgt, um Endlosschleifen zu verhindern
+    final duration = Duration(minutes: _timeRunningMinutes > 0 ? _timeRunningMinutes : 1);
+    _cycleTimer = Timer(duration, () {
       isDefectActive.value = true;
       _scheduleRecovery();
     });
   }
 
   void _scheduleRecovery() {
-    _cycleTimer = Timer(Duration(minutes: _timeErrorMinutes), () {
+    // Sicherstellen, dass die Zeit mindestens 1 Minute beträgt
+    final duration = Duration(minutes: _timeErrorMinutes > 0 ? _timeErrorMinutes : 1);
+    _cycleTimer = Timer(duration, () {
       isDefectActive.value = false;
       _scheduleDefect();
     });

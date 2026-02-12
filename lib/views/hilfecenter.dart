@@ -17,7 +17,7 @@ class _HilfeCenterState extends State<HilfeCenter> {
     FAQItem(
       title: 'Wo bin ich?',
       content:
-          'Du befindest dich am KVB Ticketautomaten im Karneval der Kollektive. Der Automat hilft dir, schnell und einfach Fahrkarten für deine Reise zu kaufen.',
+          'Willkommen in der pulsierenden Stadt der Träume! Du bist beim Karneval der Kollektive (KDK) im BüZe Ehrenfeld.\n\n4 Nächte, 4 Sounds:\n• Do: @aya.booking x @myzel_myzel\n• Fr: @tiefgang.party\n• Sa: @btbt_koellektiv x @grober_unfug_ev\n• So: @kaffe_guezel x @krakeleeclub\n\n@dieschmauserei versorgt dich mit Bohnenburgern. Hass hat hier keinen Platz!\n\nOrientierungslos? Sprich jemanden an, der dich zur Awareness begleitet. Du findest sie in der obersten Etage am Café vorbei oder als mobile Teams.',
       icon: Icons.location_on,
     ),
     FAQItem(
@@ -225,6 +225,14 @@ class _HilfeCenterState extends State<HilfeCenter> {
                       onPressed: () async {
                         final running = int.tryParse(runningController.text) ?? 30;
                         final error = int.tryParse(errorController.text) ?? 5;
+                        
+                        if (isActive && (running <= 0 || error <= 0)) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(content: Text('Zeiten müssen mindestens 1 Minute betragen.')),
+                          );
+                          return;
+                        }
+                        
                         await defectService.updateSettings(running, error, isActive);
                         if (context.mounted) Navigator.pop(context);
                       },
