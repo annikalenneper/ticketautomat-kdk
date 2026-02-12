@@ -542,48 +542,45 @@ class _QuestDialogState extends State<QuestDialog> {
   Future<void> _selectAndPrintQuest(String category) async {
     final categoryQuests = _quests.where((q) => q['Kategorie'] == category).toList();
     if (categoryQuests.isEmpty) return;
-    
+
     categoryQuests.shuffle();
     final selectedQuest = categoryQuests.first;
-    
+
     // Schließe Quest-Dialog
     if (!mounted) return;
     Navigator.of(context).pop();
-    
-    // Zeige "Druckt..."-Dialog
+
+    // Zeige "Druckt..."-Dialog als FutureBuilder wie bei Tickets
+    if (!mounted) return;
+    await showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => FutureBuilder(
+        future: () async {
+          try {
+            final ticketBytes = await buildQuestTicket(
+              category: category,
+              questText: selectedQuest['Aufgabe'] as String,
+            );
+            await PrintService().printRawBytes(ticketBytes);
+            await Future.delayed(const Duration(seconds: 2));
+          } catch (e) {}
+        }(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            Future.microtask(() => Navigator.of(context).pop());
+          }
+          return const PrintingDialog();
+        },
+      ),
+    );
+
     if (!mounted) return;
     showDialog(
       context: context,
       barrierDismissible: false,
-      builder: (context) => const PrintingDialog(),
+      builder: (context) => const TicketReceiptDialog(),
     );
-    
-    try {
-      // Direkt drucken
-      final ticketBytes = await buildQuestTicket(
-        category: category,
-        questText: selectedQuest['Aufgabe'] as String,
-      );
-      await PrintService().printRawBytes(ticketBytes);
-      
-      // Simuliere Druckvorgang
-      await Future.delayed(const Duration(seconds: 2));
-      
-      if (mounted) {
-        Navigator.of(context).pop(); // Schließe "Druckt..."-Dialog
-        
-        // Zeige "Entnehmen Sie Ihr Ticket" Dialog
-        showDialog(
-          context: context,
-          barrierDismissible: false,
-          builder: (context) => const TicketReceiptDialog(),
-        );
-      }
-    } catch (e) {
-      if (mounted) {
-        Navigator.of(context).pop(); // Schließe "Druckt..."-Dialog
-      }
-    }
   }
 
   @override
@@ -766,6 +763,8 @@ class PushTheButtonDialog extends StatefulWidget {
 class _PushTheButtonDialogState extends State<PushTheButtonDialog> {
   int _buttonPressCount = 0;
   List<ButtonPushData> _pushData = [];
+  double _scale = 1.0;
+  bool _isPressed = false;
 
   @override
   void initState() {
@@ -785,6 +784,27 @@ class _PushTheButtonDialogState extends State<PushTheButtonDialog> {
     await ButtonMetricsService.recordPush(_pushData);
     setState(() {
       _buttonPressCount = _pushData.length;
+    });
+  }
+
+  void _onTapDown(TapDownDetails details) {
+    setState(() {
+      _scale = 0.92;
+      _isPressed = true;
+    });
+  }
+
+  void _onTapUp(TapUpDetails details) {
+    setState(() {
+      _scale = 1.0;
+      _isPressed = false;
+    });
+  }
+
+  void _onTapCancel() {
+    setState(() {
+      _scale = 1.0;
+      _isPressed = false;
     });
   }
 
@@ -856,27 +876,35 @@ class _PushTheButtonDialogState extends State<PushTheButtonDialog> {
                 children: [
                   GestureDetector(
                     onTap: _incrementCounter,
-                    child: Container(
-                      width: 200,
-                      height: 200,
-                      decoration: BoxDecoration(
-                        color: AppColors.secondary,
-                        border: Border.all(color: AppColors.black, width: 3),
-                        boxShadow: const [
-                          BoxShadow(
-                            color: AppColors.black,
-                            offset: Offset(6, 6),
-                          ),
-                        ],
-                      ),
-                      child: const Center(
-                        child: Text(
-                          'PUSH',
-                          style: TextStyle(
-                            fontSize: 32,
-                            fontWeight: FontWeight.w900,
-                            color: AppColors.white,
-                            letterSpacing: 2,
+                    onTapDown: _onTapDown,
+                    onTapUp: _onTapUp,
+                    onTapCancel: _onTapCancel,
+                    child: AnimatedScale(
+                      scale: _scale,
+                      duration: const Duration(milliseconds: 120),
+                      curve: Curves.easeInOut,
+                      child: Container(
+                        width: 200,
+                        height: 200,
+                        decoration: BoxDecoration(
+                          color: AppColors.secondary,
+                          border: Border.all(color: AppColors.black, width: 3),
+                          boxShadow: const [
+                            BoxShadow(
+                              color: AppColors.black,
+                              offset: Offset(6, 6),
+                            ),
+                          ],
+                        ),
+                        child: const Center(
+                          child: Text(
+                            'PUSH',
+                            style: TextStyle(
+                              fontSize: 32,
+                              fontWeight: FontWeight.w900,
+                              color: AppColors.white,
+                              letterSpacing: 2,
+                            ),
                           ),
                         ),
                       ),

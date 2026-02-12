@@ -110,7 +110,7 @@ Future<List<int>> buildFinalTicket(TicketData ticketData) async {
   bytes.addAll(generator.text(wrapText('Fahrzeit: ${ticketData.fahrzeit}')));
   bytes.addAll(generator.text(wrapText('Preis: ${ticketData.preis}')));
 
-  bytes.addAll(generator.feed(2));
+  bytes.addAll(generator.feed(1));
   // Footer
   bytes.addAll(generator.text(
     '------------------------------',
@@ -134,7 +134,7 @@ Future<List<int>> buildFinalTicket(TicketData ticketData) async {
     styles: PosStyles(align: PosAlign.center),
   ));
 
-  bytes.addAll(generator.feed(2));
+  bytes.addAll(generator.feed(1));
   bytes.addAll(generator.cut());
 
   return bytes;
