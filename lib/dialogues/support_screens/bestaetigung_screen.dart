@@ -2,10 +2,26 @@ import 'package:flutter/material.dart';
 import 'package:ticket_alternative/styles/app_colors.dart';
 
 /// Screen 3: Bestätigung (vorher Screen 2)
-class BestaetigungScreen extends StatelessWidget {
-  final VoidCallback onContinue;
+class BestaetigungScreen extends StatefulWidget {
+  final VoidCallback onCompleted;
 
-  const BestaetigungScreen({super.key, required this.onContinue});
+  const BestaetigungScreen({super.key, required this.onCompleted});
+
+  @override
+  State<BestaetigungScreen> createState() => _BestaetigungScreenState();
+}
+
+class _BestaetigungScreenState extends State<BestaetigungScreen> {
+  @override
+  void initState() {
+    super.initState();
+    // Auto-close after 3 seconds
+    Future.delayed(const Duration(seconds: 3), () {
+      if (mounted) {
+        widget.onCompleted();
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,32 +57,8 @@ class BestaetigungScreen extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 30),
-        GestureDetector(
-          onTap: onContinue,
-          child: Container(
-            width: double.infinity,
-            padding: const EdgeInsets.all(20),
-            decoration: BoxDecoration(
-              color: AppColors.primary,
-              border: Border.all(color: AppColors.black, width: 2),
-              boxShadow: const [
-                BoxShadow(
-                  color: AppColors.black,
-                  offset: Offset(4, 4),
-                ),
-              ],
-            ),
-            child: const Center(
-              child: Text(
-                'WEITER',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w800,
-                  color: AppColors.white,
-                ),
-              ),
-            ),
-          ),
+        const Center(
+          child: CircularProgressIndicator(),
         ),
       ],
     );

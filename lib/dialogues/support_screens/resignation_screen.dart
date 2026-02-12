@@ -3,9 +3,9 @@ import 'package:ticket_alternative/styles/app_colors.dart';
 
 /// Screen 7: Resignation (vorher Screen 6)
 class ResignationScreen extends StatelessWidget {
-  final Function(int) onRate;
+  final VoidCallback onClose;
 
-  const ResignationScreen({super.key, required this.onRate});
+  const ResignationScreen({super.key, required this.onClose});
 
   @override
   Widget build(BuildContext context) {
@@ -53,49 +53,34 @@ class ResignationScreen extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 25),
-        _buildRatingButton(
-          text: '⭐⭐⭐⭐⭐ Ausgezeichnet',
-          onTap: () => onRate(5),
-        ),
-        const SizedBox(height: 15),
-        _buildRatingButton(
-          text: '⭐⭐⭐⭐ Sehr gut',
-          onTap: () => onRate(4),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildRatingButton({
-    required String text,
-    required VoidCallback onTap,
-  }) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        width: double.infinity,
-        padding: const EdgeInsets.all(20),
-        decoration: BoxDecoration(
-          color: AppColors.attention,
-          border: Border.all(color: AppColors.black, width: 2),
-          boxShadow: const [
-            BoxShadow(
-              color: AppColors.black,
-              offset: Offset(4, 4),
+        GestureDetector(
+          onTap: onClose,
+          child: Container(
+            width: double.infinity,
+            padding: const EdgeInsets.all(20),
+            decoration: BoxDecoration(
+              color: AppColors.primary,
+              border: Border.all(color: AppColors.black, width: 2),
+              boxShadow: const [
+                BoxShadow(
+                  color: AppColors.black,
+                  offset: Offset(4, 4),
+                ),
+              ],
             ),
-          ],
-        ),
-        child: Center(
-          child: Text(
-            text,
-            style: const TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.w800,
-              color: AppColors.textDark,
+            child: const Center(
+              child: Text(
+                'SCHLIEßEN',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w800,
+                  color: AppColors.white,
+                ),
+              ),
             ),
           ),
         ),
-      ),
+      ],
     );
   }
 }

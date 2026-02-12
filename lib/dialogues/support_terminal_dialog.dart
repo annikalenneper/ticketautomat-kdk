@@ -60,12 +60,12 @@ class _SupportTerminalDialogState extends State<SupportTerminalDialog> {
       case 3:
         // Screen 3: Bestätigung
         return BestaetigungScreen(
-          onContinue: () => _showLoadingAndContinue(5),
+          onCompleted: () => Navigator.of(context).pop(),
         );
       case 4:
         // Screen 4: Themenfilter
         return ThemenfilterScreen(
-          onSelection: (String theme) => _goToScreen(3),
+          onSelection: (String theme) => _showLoadingAndContinue(5),
         );
       case 5:
         // Screen 5: Nicht-Hilfe
@@ -80,7 +80,7 @@ class _SupportTerminalDialogState extends State<SupportTerminalDialog> {
               _retryCount++;
             });
             if (_retryCount >= 3) {
-              _goToScreen(7);
+              _goToScreen(3);
             } else {
               // Zurück zu Screen 6 (bleibt gleich, Animation startet neu)
               _goToScreen(6);
@@ -91,9 +91,7 @@ class _SupportTerminalDialogState extends State<SupportTerminalDialog> {
       case 7:
         // Screen 7: Resignation
         return ResignationScreen(
-          onRate: (int stars) {
-            Navigator.of(context).pop();
-          },
+          onClose: () => Navigator.of(context).pop(),
         );
       default:
         return AnliegenScreen(
