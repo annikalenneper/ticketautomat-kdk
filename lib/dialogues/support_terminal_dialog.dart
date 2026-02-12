@@ -2,10 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ticket_alternative/styles/app_colors.dart';
 import 'package:ticket_alternative/dialogues/support_screens/anliegen_screen.dart';
 import 'package:ticket_alternative/dialogues/support_screens/bestaetigung_screen.dart';
-import 'package:ticket_alternative/dialogues/support_screens/themenfilter_screen.dart';
-import 'package:ticket_alternative/dialogues/support_screens/nicht_hilfe_screen.dart';
 import 'package:ticket_alternative/dialogues/support_screens/kontaktversuch_screen.dart';
-import 'package:ticket_alternative/dialogues/support_screens/resignation_screen.dart';
 import 'package:ticket_alternative/dialogues/support_screens/loading_screen.dart';
 
 /// Hauptdialog für das Kundensupport-Terminal
@@ -18,25 +15,12 @@ class SupportTerminalDialog extends StatefulWidget {
 
 class _SupportTerminalDialogState extends State<SupportTerminalDialog> {
   int _currentScreen = 1;
-  bool _isLoading = false;
+  final bool _isLoading = false;
 
   void _goToScreen(int screen) {
     setState(() {
       _currentScreen = screen;
     });
-  }
-
-  Future<void> _showLoadingAndContinue(int nextScreen) async {
-    setState(() {
-      _isLoading = true;
-    });
-    await Future.delayed(const Duration(seconds: 3));
-    if (mounted) {
-      setState(() {
-        _isLoading = false;
-        _currentScreen = nextScreen;
-      });
-    }
   }
 
   Widget _buildCurrentScreen() {
@@ -46,44 +30,23 @@ class _SupportTerminalDialogState extends State<SupportTerminalDialog> {
 
     switch (_currentScreen) {
       case 1:
-        // Screen 1: Anliegen auswählen
+        // Schritt 1: Anliegen auswählen
         return AnliegenScreen(
-          onSelection: (String choice) async {
-            if (choice == 'FRAGE') {
-              await _showLoadingAndContinue(4);
-            } else {
-              _goToScreen(4);
-            }
-          },
-        );
-      case 3:
-        // Screen 3: Bestätigung
-        return BestaetigungScreen(
-          onCompleted: () => Navigator.of(context).pop(),
-        );
-      case 4:
-        // Screen 4: Themenfilter
-        return ThemenfilterScreen(
-          onSelection: (String theme) => _showLoadingAndContinue(5),
-        );
-      case 5:
-        // Screen 5: Nicht-Hilfe
-        return NichtHilfeScreen(
-          onContact: () => _goToScreen(6),
+          onSelection: (String choice) => _goToScreen(6),
         );
       case 6:
-        // Screen 6: Kontaktversuch
+        // Schritt 2: Kontaktversuch (simuliert Verbindung)
         return KontaktversuchScreen(
           onClose: () => _goToScreen(3),
         );
-      case 7:
-        // Screen 7: Resignation
-        return ResignationScreen(
-          onClose: () => _goToScreen(3),
+      case 3:
+        // Schritt 3: Bestätigung / Bewertung
+        return BestaetigungScreen(
+          onCompleted: () => Navigator.of(context).pop(),
         );
       default:
         return AnliegenScreen(
-          onSelection: (String choice) => _goToScreen(4),
+          onSelection: (String choice) => _goToScreen(6),
         );
     }
   }

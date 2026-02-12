@@ -20,19 +20,28 @@ class _BestaetigungScreenState extends State<BestaetigungScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Text(
-          'Wir bedanken uns für Ihre Anfrage!',
+          'Vielen Dank für gar nichts!',
           style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.w700,
+            fontSize: 24,
+            fontWeight: FontWeight.w900,
             color: AppColors.primary,
           ),
         ),
-        const SizedBox(height: 25),
+        const SizedBox(height: 15),
         const Text(
-          'Bitte bewerten Sie unseren Service:',
+          'Ihr Anliegen wurde erfolgreich an unser Team von Spezialisten (aka die Mülltonne) weitergeleitet. Wir melden uns eventuell im nächsten Leben.',
           style: TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.w600,
+            color: AppColors.textMedium,
+          ),
+        ),
+        const SizedBox(height: 30),
+        const Text(
+          'Bewerte unsere absolute Inkompetenz:',
+          style: TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.w800,
             color: AppColors.textDark,
           ),
         ),

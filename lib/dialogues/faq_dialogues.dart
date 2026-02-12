@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:ticket_alternative/styles/app_colors.dart';
+import 'package:ticket_alternative/printservice/print_service.dart';
 import 'package:ticket_alternative/printservice/quest_ticket.dart';
 import 'package:ticket_alternative/dialogues/print_dialogs.dart';
 import 'package:ticket_alternative/dialogues/button_metrics_dialog.dart';
@@ -526,9 +527,9 @@ class _QuestDialogState extends State<QuestDialog> {
   Future<void> _loadQuests() async {
     try {
       final jsonString = await rootBundle.loadString('lib/assets/quests.json');
-      final data = json.decode(jsonString) as Map<String, dynamic>;
+      final data = json.decode(jsonString) as List<dynamic>;
       setState(() {
-        _quests = List<Map<String, dynamic>>.from(data['quests']);
+        _quests = List<Map<String, dynamic>>.from(data);
         _isLoading = false;
       });
     } catch (e) {
@@ -539,28 +540,37 @@ class _QuestDialogState extends State<QuestDialog> {
   }
 
   Future<void> _selectAndPrintQuest(String category) async {
-    final categoryQuests = _quests.where((q) => q['kategorie'] == category).toList();
+    final categoryQuests = _quests.where((q) => q['Kategorie'] == category).toList();
     if (categoryQuests.isEmpty) return;
     
     categoryQuests.shuffle();
     final selectedQuest = categoryQuests.first;
     
-    setState(() {
-      _isPrinting = true;
-    });
+    // Schließe Quest-Dialog
+    if (!mounted) return;
+    Navigator.of(context).pop();
+    
+    // Zeige "Druckt..."-Dialog
+    if (!mounted) return;
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => const PrintingDialog(),
+    );
     
     try {
       // Direkt drucken
-      await buildQuestTicket(
+      final ticketBytes = await buildQuestTicket(
         category: category,
-        questText: selectedQuest['aufgabe'] as String,
+        questText: selectedQuest['Aufgabe'] as String,
       );
+      await PrintService().printRawBytes(ticketBytes);
       
       // Simuliere Druckvorgang
       await Future.delayed(const Duration(seconds: 2));
       
       if (mounted) {
-        Navigator.of(context).pop();
+        Navigator.of(context).pop(); // Schließe "Druckt..."-Dialog
         
         // Zeige "Entnehmen Sie Ihr Ticket" Dialog
         showDialog(
@@ -571,15 +581,7 @@ class _QuestDialogState extends State<QuestDialog> {
       }
     } catch (e) {
       if (mounted) {
-        setState(() {
-          _isPrinting = false;
-        });
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('Fehler beim Drucken: $e'),
-            backgroundColor: AppColors.cancel,
-          ),
-        );
+        Navigator.of(context).pop(); // Schließe "Druckt..."-Dialog
       }
     }
   }
@@ -626,7 +628,13 @@ class _QuestDialogState extends State<QuestDialog> {
                     ),
                   ),
                   IconButton(
-                    onPressed: () => Navigator.of(context).pop(),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                      showDialog(
+                        context: context,
+                        builder: (context) => const AutomatFeaturesDialog(),
+                      );
+                    },
                     icon: const Icon(
                       Icons.close,
                       color: AppColors.white,

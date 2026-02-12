@@ -1,88 +1,74 @@
-{
-  "quests": [
-    {
-      "kategorie": "Interaktion",
-      "aufgabe": "Finde eine Person mit einer Perücke und frage sie nach ihrem Act heute."
-    },
-    {
-      "kategorie": "Schnitzeljagd",
-      "aufgabe": "In welcher Bahn bist du gerade?"
-    },
-    {
-      "kategorie": "Interaktion",
-      "aufgabe": "Wie viele Leute passen in den Fotoautomat?"
-    },
-    {
-      "kategorie": "Schnitzeljagd",
-      "aufgabe": "Welcher Snack am Kiosk auf dem Marktplatz ist dein Lieblingssnack?"
-    },
-    {
-      "kategorie": "Interaktion",
-      "aufgabe": "Verschenke einen Kaugummi aus dem Automat."
-    },
-    {
-      "kategorie": "Schnitzeljagd",
-      "aufgabe": "Wo ist der Secret Floor?"
-    },
-    {
-      "kategorie": "Interaktion",
-      "aufgabe": "Finde drei Personen, die zu deinem Kostüm passen."
-    },
-    {
-      "kategorie": "Schnitzeljagd",
-      "aufgabe": "Wie viele Tauben findest du?"
-    },
-    {
-      "kategorie": "Interaktion",
-      "aufgabe": "Finde eine Person mit einem Kostüm-Match und macht ein Foto im Automat."
-    },
-    {
-      "kategorie": "Schnitzeljagd",
-      "aufgabe": "Wie viele Zeppeline fliegen heute?"
-    },
-    {
-      "kategorie": "Interaktion",
-      "aufgabe": "Wurde dein Ticket schon kontrolliert? Geh zur SchaffnerIn"
-    },
-    {
-      "kategorie": "Interaktion",
-      "aufgabe": "Du hast deine Tasche in der Bahn verloren. Erzähle einer MitarbeiterIn davon."
-    },
-    {
-      "kategorie": "Schnitzeljagd",
-      "aufgabe": "Hast du noch frischen Atem? Hol dir nen Kaugummi am Automat."
-    },
-    {
-      "kategorie": "Interaktion",
-      "aufgabe": "Mach jemandem ein ehrliches Kompliment."
-    },
-    {
-      "kategorie": "Schnitzeljagd",
-      "aufgabe": "Ruf jemand in der Telefonzelle an. Nummern findest du im Buch."
-    },
-    {
-      "kategorie": "Interaktion",
-      "aufgabe": "Finde jemanden mit dem gleichen Lieblingsgetränk wie du."
-    },
-    {
-      "kategorie": "Schnitzeljagd",
-      "aufgabe": "Zähle die Fenster an den Fassaden."
-    },
-    {
-      "kategorie": "Interaktion",
-      "aufgabe": "Tausche ein Accessoire mit einer fremden Person."
-    },
-    {
-      "kategorie": "Schnitzeljagd",
-      "aufgabe": "Wo ist der nächste Halt? Check den Fahrplan"
-    },
-    {
-      "kategorie": "Interaktion",
-      "aufgabe": "Bringe jemanden zum Lachen."
-    },
-    {
-      "kategorie": "Schnitzeljagd",
-      "aufgabe": "Welcher Sticker gefällt dir am besten?"
-    }
-  ]
-}
+[
+  { "Kategorie": "Interaktion", "Aufgabe": "Finde eine Person mit einer Perücke und frage sie nach ihrem Act heute." },
+  { "Kategorie": "Interaktion", "Aufgabe": "Wie viele Leute passen in den Fotoautomaten?" },
+  { "Kategorie": "Interaktion", "Aufgabe": "Ist Fam. Strobo Oben Drüber zuhause? Klingel, um es rauszufinden." },
+  { "Kategorie": "Interaktion", "Aufgabe": "Finde drei Personen, die zu deinem Kostüm passen." },
+  { "Kategorie": "Interaktion", "Aufgabe": "Finde eine Person mit einem Kostüm-Match und macht ein Foto im Automaten." },
+  { "Kategorie": "Interaktion", "Aufgabe": "Wurde dein Ticket schon kontrolliert? Geh zur Schaffner*in." },
+  { "Kategorie": "Interaktion", "Aufgabe": "Du hast deine Tasche in der Bahn verloren. Erzähle einer Mitarbeiter*in davon." },
+  { "Kategorie": "Interaktion", "Aufgabe": "Mach jemandem ein ehrliches Kompliment." },
+  { "Kategorie": "Interaktion", "Aufgabe": "Finde jemanden mit dem gleichen Lieblingsgetränk wie du." },
+  { "Kategorie": "Interaktion", "Aufgabe": "Tausche ein Accessoire mit einer fremden Person." },
+  { "Kategorie": "Interaktion", "Aufgabe": "Bringe jemanden zum Lachen." },
+  { "Kategorie": "Interaktion", "Aufgabe": "Stimme \"Guten Morgen Barbarossaplatz\" an und finde 3 Mitsingende." },
+  { "Kategorie": "Interaktion", "Aufgabe": "Halte eine dir bekannte Person an den Händen und schaue ihr 30 Sek. in die Augen, ohne zu blinzeln." },
+  { "Kategorie": "Interaktion", "Aufgabe": "Finde eine Person, die das Gegenteil zu deinem Kostüm trägt, und macht zusammen ein Foto." },
+  { "Kategorie": "Interaktion", "Aufgabe": "Überlege dir einen kurzen Tanz und organisiere Personen für einen Flashmob, um deine Dancemoves zu performen." },
+  { "Kategorie": "Interaktion", "Aufgabe": "Gib zwei Personen auf der Party eine \"warme Dusche\" (viele Komplimente)." },
+  { "Kategorie": "Interaktion", "Aufgabe": "Küss wen unter dem \"Knutschen\"-Leuchtschild." },
+
+  { "Kategorie": "Schnitzeljagd", "Aufgabe": "In welcher Bahn bist du gerade?" },
+  { "Kategorie": "Schnitzeljagd", "Aufgabe": "Welcher Snack am Kiosk auf dem Marktplatz ist dein Lieblingssnack?" },
+  { "Kategorie": "Schnitzeljagd", "Aufgabe": "Finde den Secret Floor." },
+  { "Kategorie": "Schnitzeljagd", "Aufgabe": "Wie viele Tauben findest du?" },
+  { "Kategorie": "Schnitzeljagd", "Aufgabe": "Lasse den Zeppelin fliegen!" },
+  { "Kategorie": "Schnitzeljagd", "Aufgabe": "Halte Ausschau nach einer Discokugel." },
+  { "Kategorie": "Schnitzeljagd", "Aufgabe": "Ruf jemanden in der Telefonzelle an. Nummern findest du im Buch." },
+  { "Kategorie": "Schnitzeljagd", "Aufgabe": "Zähle die Fenster an den Fassaden." },
+  { "Kategorie": "Schnitzeljagd", "Aufgabe": "Check den Fahrplan. Wohin geht die Fahrt?" },
+  { "Kategorie": "Schnitzeljagd", "Aufgabe": "Suche ein Krakelee-Poster und scanne den QR-Code." },
+  { "Kategorie": "Schnitzeljagd", "Aufgabe": "Wie viele Wolken gibt es?" },
+  { "Kategorie": "Schnitzeljagd", "Aufgabe": "Finde 3 \"ziehen\"-Sticker." },
+  { "Kategorie": "Schnitzeljagd", "Aufgabe": "Wirf einen Liebesbrief in den Briefkasten." },
+  { "Kategorie": "Schnitzeljagd", "Aufgabe": "Wie viele Sticker gibt es auf dem linken Tisch im BallerBüdchen?" },
+  { "Kategorie": "Schnitzeljagd", "Aufgabe": "Bring die U-Bahn zum Stehen." },
+  { "Kategorie": "Schnitzeljagd", "Aufgabe": "Drücke mind. einen Knopf neben dem DJ-Pult auf dem Floor Oben Drüber." },
+  { "Kategorie": "Schnitzeljagd", "Aufgabe": "Wie oft blinken die Ampeln bei den Rolltreppen in einer Minute?" },
+  { "Kategorie": "Schnitzeljagd", "Aufgabe": "Finde das Gästebuch und schreibe ein Gedicht hinein." },
+  { "Kategorie": "Schnitzeljagd", "Aufgabe": "Wie viele \"ballern\"-Sticker findest du außen auf der Litfaßsäule?" },
+
+  { "Kategorie": "Interaktion", "Aufgabe": "Sprich für zehn Minuten in einer anderen Sprache." },
+  { "Kategorie": "Interaktion", "Aufgabe": "Mache einer fremden Person ein angemessenes Kompliment." },
+  { "Kategorie": "Interaktion", "Aufgabe": "Trinke für eine Stunde nur mit deiner linken Hand. Solltest du das vergessen, trinke für jedes vergessene Mal einen Shot!" },
+
+  { "Kategorie": "Schnitzeljagd", "Aufgabe": "Wie viele Speichen hat das Vorderrad des Fahrrads auf dem Marktplatz?" },
+
+  { "Kategorie": "Interaktion", "Aufgabe": "Bestelle dein nächstes Getränk mit Operngesang." },
+  { "Kategorie": "Interaktion", "Aufgabe": "Mache einer anderen Person einen überschwänglichen Antrag zum gemeinsamen Tanzen auf dem Unten-durch-Floor." },
+
+  { "Kategorie": "Schnitzeljagd", "Aufgabe": "Finde deinen Vornamen im Telefonbuch an der Telefonzelle." },
+  { "Kategorie": "Schnitzeljagd", "Aufgabe": "Lerne den Fahrplan für heute auswendig." },
+  { "Kategorie": "Schnitzeljagd", "Aufgabe": "Wie viele Artists stehen für morgen auf dem Fahrplan?" },
+
+  { "Kategorie": "Interaktion", "Aufgabe": "Finde drei Personen, deren Namen mit K, D oder K beginnen." },
+  { "Kategorie": "Interaktion", "Aufgabe": "Finde eine Person, die mit der KVB zur Party gefahren ist." },
+
+  { "Kategorie": "Schnitzeljagd", "Aufgabe": "Wie viele Zäune stehen von der Mauer bis zum Kassenhäuschen?" },
+  { "Kategorie": "Schnitzeljagd", "Aufgabe": "Finde die Nummern für alle Telefone raus." },
+  { "Kategorie": "Schnitzeljagd", "Aufgabe": "Wie heißt die Endstation von Oben Drüber?" },
+  { "Kategorie": "Schnitzeljagd", "Aufgabe": "Wie viele Straßennamen hängen am Kiosk?" },
+  { "Kategorie": "Schnitzeljagd", "Aufgabe": "Welche Hausnummer hat der Kiosk?" },
+
+  { "Kategorie": "Interaktion", "Aufgabe": "Starte eine Polonaise." },
+  { "Kategorie": "Interaktion", "Aufgabe": "Finde eine Person, die mit dir den Chicken-Dance tanzt." },
+
+  { "Kategorie": "Schnitzeljagd", "Aufgabe": "Finde den Liebesbriefkasten <3" },
+  { "Kategorie": "Interaktion", "Aufgabe": "Hinterlass Oben Drüber nette Worte im Liebesbriefkasten." },
+  { "Kategorie": "Schnitzeljagd", "Aufgabe": "In welchem Stock wohnt Yaylimak?" },
+  { "Kategorie": "Schnitzeljagd", "Aufgabe": "Finde die DHL-Drohne." },
+
+  { "Kategorie": "Interaktion", "Aufgabe": "Wie viele Straßennamen kannst du Oben Drüber finden?" },
+  { "Kategorie": "Interaktion", "Aufgabe": "Geh nach Vorne Links zum Baller BLVD. Drücke dort den Ampelknopf." },
+
+  { "Kategorie": "Schnitzeljagd", "Aufgabe": "Zieh die Notbremse im Zug!" }
+]

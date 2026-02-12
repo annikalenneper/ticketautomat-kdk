@@ -32,11 +32,13 @@ class TicketContent extends PrintContent {
   final String from;
   final String to;
   final String preis;
+  final String fahrzeit;
 
   const TicketContent({
     required this.from,
     required this.to,
     required this.preis,
+    required this.fahrzeit,
   });
 
   @override
@@ -59,6 +61,8 @@ class TicketContent extends PrintContent {
         _buildPreviewRow('Von:', from),
         const SizedBox(height: 8),
         _buildPreviewRow('Nach:', to),
+        const SizedBox(height: 8),
+        _buildPreviewRow('Fahrzeit:', fahrzeit),
         const SizedBox(height: 8),
         _buildPreviewRow('Preis:', preis),
       ],
@@ -96,6 +100,7 @@ class TicketContent extends PrintContent {
       to: to,
       dateTime: DateTime.now(),
       preis: preis,
+      fahrzeit: fahrzeit,
       ticketType: 'Einzelticket',
     );
     return await service.printTicket(ticketData);
@@ -185,10 +190,11 @@ class PrinterDialog extends StatefulWidget {
     required String from,
     required String to,
     required String preis,
+    required String fahrzeit,
   }) {
     return PrinterDialog(
       key: key,
-      content: TicketContent(from: from, to: to, preis: preis),
+      content: TicketContent(from: from, to: to, preis: preis, fahrzeit: fahrzeit),
     );
   }
 
@@ -288,7 +294,11 @@ class _PrinterDialogState extends State<PrinterDialog> {
           _isConnecting = false;
           _isPrinting = false;
         });
-        await PrintService().disconnectPrinter();
+        // Geben Sie dem Drucker Zeit, den Puffer zu verarbeiten, bevor die Verbindung getrennt wird
+        await Future.delayed(const Duration(milliseconds: 500));
+        // Wir trennen die Verbindung nicht zwingend sofort, um die Verbindung für den nächsten Druckvorgang offen zu halten
+        // Falls gewünscht, kann disconnectPrinter() hier wieder aktiviert werden:
+        // await PrintService().disconnectPrinter();
       }
     }
   }

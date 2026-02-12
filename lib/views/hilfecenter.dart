@@ -3,6 +3,7 @@ import 'package:ticket_alternative/styles/app_colors.dart';
 import 'package:ticket_alternative/headers/help_header.dart';
 import 'package:ticket_alternative/dialogues/faq_dialogues.dart';
 import 'package:ticket_alternative/dialogues/support_terminal_dialog.dart';
+import 'package:ticket_alternative/printservice/defect_service.dart';
 
 class HilfeCenter extends StatefulWidget {
   const HilfeCenter({super.key});
@@ -51,13 +52,190 @@ class _HilfeCenterState extends State<HilfeCenter> {
                 children: [
                   _buildFAQSection(),
                   Expanded(child: Container()), // Flexible Spacer
-                  _buildSupportSection(),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Expanded(child: _buildSupportSection()),
+                      const SizedBox(width: 20),
+                      _buildAdminLock(),
+                    ],
+                  ),
                   const SizedBox(height: 20),
                 ],
               ),
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildAdminLock() {
+    return GestureDetector(
+      onTap: _showPinDialog,
+      child: Container(
+        padding: const EdgeInsets.all(20),
+        decoration: BoxDecoration(
+          color: AppColors.white,
+          border: Border.all(color: AppColors.black, width: 2),
+          boxShadow: const [
+            BoxShadow(
+              color: AppColors.black,
+              offset: Offset(4, 4),
+            ),
+          ],
+        ),
+        child: const Icon(
+          Icons.lock_outline,
+          color: AppColors.black,
+          size: 30,
+        ),
+      ),
+    );
+  }
+
+  void _showPinDialog() {
+    final TextEditingController pinController = TextEditingController();
+    showDialog(
+      context: context,
+      builder: (context) => Dialog(
+        backgroundColor: Colors.transparent,
+        child: Container(
+          padding: const EdgeInsets.all(30),
+          decoration: BoxDecoration(
+            color: AppColors.white,
+            border: Border.all(color: AppColors.black, width: 3),
+            boxShadow: const [
+              BoxShadow(
+                color: AppColors.black,
+                offset: Offset(8, 8),
+              ),
+            ],
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Text(
+                'ADMIN ZUGANG',
+                style: TextStyle(
+                  fontSize: 22,
+                  fontWeight: FontWeight.w900,
+                  color: AppColors.primary,
+                ),
+              ),
+              const SizedBox(height: 20),
+              TextField(
+                controller: pinController,
+                obscureText: true,
+                keyboardType: TextInputType.number,
+                decoration: const InputDecoration(
+                  labelText: 'PIN eingeben',
+                  border: OutlineInputBorder(),
+                ),
+              ),
+              const SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: () {
+                  if (pinController.text == '12131215') {
+                    Navigator.pop(context);
+                    _showSettingsDialog();
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('Falscher PIN')),
+                    );
+                  }
+                },
+                child: const Text('VERIFIZIEREN'),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  void _showSettingsDialog() {
+    final defectService = DefectService();
+    final runningController = TextEditingController(text: defectService.timeRunning.toString());
+    final errorController = TextEditingController(text: defectService.timeError.toString());
+    bool isActive = defectService.isEnabled;
+
+    showDialog(
+      context: context,
+      builder: (context) => StatefulBuilder(
+        builder: (context, setState) => Dialog(
+          backgroundColor: Colors.transparent,
+          child: Container(
+            padding: const EdgeInsets.all(30),
+            decoration: BoxDecoration(
+              color: AppColors.white,
+              border: Border.all(color: AppColors.black, width: 3),
+              boxShadow: const [
+                BoxShadow(
+                  color: AppColors.black,
+                  offset: Offset(8, 8),
+                ),
+              ],
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Text(
+                  'DEFEKT-EINSTELLUNGEN',
+                  style: TextStyle(
+                    fontSize: 22,
+                    fontWeight: FontWeight.w900,
+                    color: AppColors.primary,
+                  ),
+                ),
+                const SizedBox(height: 25),
+                SwitchListTile(
+                  title: const Text('Defekt-Zyklus aktiv'),
+                  value: isActive,
+                  onChanged: (val) => setState(() => isActive = val),
+                ),
+                const SizedBox(height: 15),
+                TextField(
+                  controller: runningController,
+                  keyboardType: TextInputType.number,
+                  decoration: const InputDecoration(
+                    labelText: 'Laufzeit (Minuten)',
+                    border: OutlineInputBorder(),
+                  ),
+                ),
+                const SizedBox(height: 15),
+                TextField(
+                  controller: errorController,
+                  keyboardType: TextInputType.number,
+                  decoration: const InputDecoration(
+                    labelText: 'Fehlerzeit (Minuten)',
+                    border: OutlineInputBorder(),
+                  ),
+                ),
+                const SizedBox(height: 25),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    TextButton(
+                      onPressed: () => Navigator.pop(context),
+                      child: const Text('ABBRECHEN'),
+                    ),
+                    const SizedBox(width: 15),
+                    ElevatedButton(
+                      onPressed: () async {
+                        final running = int.tryParse(runningController.text) ?? 30;
+                        final error = int.tryParse(errorController.text) ?? 5;
+                        await defectService.updateSettings(running, error, isActive);
+                        if (context.mounted) Navigator.pop(context);
+                      },
+                      child: const Text('SPEICHERN'),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }

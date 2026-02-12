@@ -107,6 +107,7 @@ Future<List<int>> buildFinalTicket(TicketData ticketData) async {
   bytes.addAll(generator.feed(2));
 
   bytes.addAll(generator.text(wrapText('Gültig ab: ${ticketData.formattedDateTime}')));
+  bytes.addAll(generator.text(wrapText('Fahrzeit: ${ticketData.fahrzeit}')));
   bytes.addAll(generator.text(wrapText('Preis: ${ticketData.preis}')));
 
   bytes.addAll(generator.feed(2));
@@ -146,12 +147,14 @@ class TicketData {
   final DateTime dateTime;
   final String preis;
   final String ticketType;
+  final String fahrzeit;
 
   TicketData({
     required this.from,
     required this.to,
     required this.dateTime,
     required this.preis,
+    required this.fahrzeit,
     this.ticketType = 'Einzelticket',
   });
 

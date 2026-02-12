@@ -53,9 +53,37 @@ class PanelLeft extends StatelessWidget {
                 onPressed: toController.text.isEmpty
                     ? null
                     : () async {
-                        // Hole Preis aus JSON-Daten
+                        // Hole Daten aus JSON
                         final haltestelle = HaltestellenService.findByName(toController.text);
                         final preisString = haltestelle?.preis ?? '0';
+                        final fahrzeitString = haltestelle?.fahrzeit ?? 'Unbekannt';
+                        final zwischenstoppsString = haltestelle?.zwischenstopps ?? 'Unbekannt';
+                        final dialogHint = haltestelle?.dialog;
+
+                        // Zeige Hinweis-Dialog wenn vorhanden
+                        if (dialogHint != null && context.mounted) {
+                          final shouldContinue = await showDialog<bool>(
+                            context: context,
+                            barrierDismissible: false,
+                            builder: (context) => HintDialog(hint: dialogHint),
+                          );
+                          if (shouldContinue != true || !context.mounted) return;
+                        }
+
+                        // Zeige Zusammenfassungs-Dialog (immer)
+                        if (!context.mounted) return;
+                        final shouldPrint = await showDialog<bool>(
+                          context: context,
+                          barrierDismissible: false,
+                          builder: (context) => TicketSummaryDialog(
+                            from: 'BüZe Ehrenfeld - Unten durch (West)',
+                            to: toController.text,
+                            preis: preisString,
+                            fahrzeit: fahrzeitString,
+                            zwischenstopps: zwischenstoppsString,
+                          ),
+                        );
+                        if (shouldPrint != true || !context.mounted) return;
 
                         // Zeige "Druckt..."-Dialog
                         showDialog(
@@ -71,6 +99,7 @@ class PanelLeft extends StatelessWidget {
                             to: toController.text,
                             dateTime: DateTime.now(),
                             preis: preisString,
+                            fahrzeit: fahrzeitString,
                             ticketType: 'Einzelticket',
                           );
                           
@@ -92,13 +121,6 @@ class PanelLeft extends StatelessWidget {
                         } catch (e) {
                           if (context.mounted) {
                             Navigator.of(context).pop(); // Schließe "Druckt..."-Dialog
-                            
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: Text('Fehler beim Drucken: $e'),
-                                backgroundColor: AppColors.cancel,
-                              ),
-                            );
                           }
                         }
                       },
@@ -244,12 +266,18 @@ class PanelLeft extends StatelessWidget {
               context: context,
               builder: (BuildContext context) {
                 return Dialog(
-                  shape: const ContinuousRectangleBorder(
-                    side: BorderSide(color: AppColors.black, width: 3),
-                  ),
+                  backgroundColor: Colors.transparent,
+                  insetPadding: const EdgeInsets.symmetric(horizontal: 40, vertical: 40),
                   child: Container(
-                    decoration: const BoxDecoration(
+                    decoration: BoxDecoration(
                       color: AppColors.backgroundLight,
+                      border: Border.all(color: AppColors.black, width: 3),
+                      boxShadow: const [
+                        BoxShadow(
+                          color: AppColors.black,
+                          offset: Offset(8, 8),
+                        ),
+                      ],
                     ),
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
@@ -263,42 +291,82 @@ class PanelLeft extends StatelessWidget {
                               bottom: BorderSide(color: AppColors.black, width: 2),
                             ),
                           ),
-                          child: const Text(
-                            'HALTESTELLE WÄHLEN',
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.w900,
-                              color: AppColors.white,
-                              letterSpacing: 1,
-                            ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              const Text(
+                                'HALTESTELLE WÄHLEN',
+                                style: TextStyle(
+                                  fontSize: 22,
+                                  fontWeight: FontWeight.w900,
+                                  color: AppColors.white,
+                                  letterSpacing: 1.5,
+                                ),
+                              ),
+                              IconButton(
+                                onPressed: () => Navigator.of(context).pop(),
+                                icon: const Icon(
+                                  Icons.close,
+                                  color: AppColors.white,
+                                  size: 28,
+                                ),
+                                padding: EdgeInsets.zero,
+                                constraints: const BoxConstraints(),
+                              ),
+                            ],
                           ),
                         ),
-                        Flexible(
-                          child: ListView.builder(
-                            shrinkWrap: true,
-                            itemCount: haltestellen.length,
-                            itemBuilder: (context, index) {
-                              final station = haltestellen[index];
-                              return ListTile(
-                                leading: const Icon(
-                                  Icons.location_on,
-                                  color: AppColors.black,
-                                ),
-                                title: Text(
-                                  station.name,
-                                  style: const TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w700,
-                                    color: AppColors.textDark,
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.all(20),
+                            child: GridView.builder(
+                              itemCount: haltestellen.length,
+                              gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                                maxCrossAxisExtent: 250,
+                                crossAxisSpacing: 15,
+                                mainAxisSpacing: 15,
+                                childAspectRatio: 2.2,
+                              ),
+                              itemBuilder: (context, index) {
+                                final station = haltestellen[index];
+                                return GestureDetector(
+                                  onTap: () {
+                                    toController.text = station.name;
+                                    Navigator.pop(context);
+                                  },
+                                  child: Container(
+                                    decoration: const BoxDecoration(
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: AppColors.black,
+                                          offset: Offset(4, 4),
+                                        ),
+                                      ],
+                                    ),
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        color: AppColors.white,
+                                        border: Border.all(color: AppColors.black, width: 2),
+                                      ),
+                                      alignment: Alignment.center,
+                                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                                      child: Text(
+                                        station.name.toUpperCase(),
+                                        textAlign: TextAlign.center,
+                                        maxLines: 2,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: const TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w800,
+                                          color: AppColors.textDark,
+                                          height: 1.1,
+                                        ),
+                                      ),
+                                    ),
                                   ),
-                                ),
-                                onTap: () {
-                                  toController.text = station.name;
-                                  Navigator.pop(context);
-                                },
-                                hoverColor: AppColors.backgroundUltraLight,
-                              );
-                            },
+                                );
+                              },
+                            ),
                           ),
                         ),
                       ],
@@ -392,7 +460,7 @@ class PanelLeft extends StatelessWidget {
     // Hole Daten aus der JSON
     final haltestelle = HaltestellenService.findByName(toController.text);
     final fahrzeit = haltestelle?.fahrzeit ?? 'Unbekannt';
-    final stops = haltestelle?.zwischenstopps ?? 0;
+    final stops = haltestelle?.zwischenstopps ?? 'Unbekannt';
     final preis = haltestelle?.preis ?? 'Unbekannt';
 
     return Column(
@@ -416,7 +484,7 @@ class PanelLeft extends StatelessWidget {
             children: [
               _buildInfoRow('⏱️ ZEIT', fahrzeit),
               const Divider(height: 20, color: AppColors.black, thickness: 1),
-              _buildInfoRow('🚏 STOPPS', '$stops HTS.'),
+              _buildInfoRow('🚏 STOPPS', stops),
               const Divider(height: 20, color: AppColors.black, thickness: 1),
               _buildInfoRow('💶 PREIS', preis, isPrice: true),
             ],

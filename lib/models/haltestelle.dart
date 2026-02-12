@@ -5,7 +5,7 @@ class Haltestelle {
   final String name;
   final String preis;
   final String fahrzeit;
-  final int zwischenstopps;
+  final String zwischenstopps;
   final String? dialog;
 
   Haltestelle({
@@ -17,12 +17,13 @@ class Haltestelle {
   });
 
   factory Haltestelle.fromJson(Map<String, dynamic> json) {
+    final dialogValue = json['Dialog 1'] as String?;
     return Haltestelle(
-      name: json['name'] as String,
-      preis: json['preis'] as String,
-      fahrzeit: json['fahrzeit'] as String,
-      zwischenstopps: json['zwischenstopps'] as int,
-      dialog: json['dialog'] as String?,
+      name: json['Name'] as String,
+      preis: json['Preis'] as String,
+      fahrzeit: json['Fahrzeit'] as String,
+      zwischenstopps: json['Zwischenstopps'] as String,
+      dialog: (dialogValue != null && dialogValue.isNotEmpty) ? dialogValue : null,
     );
   }
 }
@@ -36,10 +37,9 @@ class HaltestellenService {
     }
 
     final jsonString = await rootBundle.loadString('lib/assets/haltestellen.json');
-    final jsonData = json.decode(jsonString) as Map<String, dynamic>;
-    final haltestellenList = jsonData['haltestellen'] as List;
+    final jsonData = json.decode(jsonString) as List<dynamic>;
     
-    _cachedHaltestellen = haltestellenList
+    _cachedHaltestellen = jsonData
         .map((item) => Haltestelle.fromJson(item as Map<String, dynamic>))
         .toList();
     

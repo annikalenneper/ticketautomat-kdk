@@ -4,8 +4,11 @@ import 'package:ticket_alternative/styles/app_colors.dart';
 import 'package:ticket_alternative/headers/main_header.dart';
 import 'package:ticket_alternative/views/panel_left.dart';
 import 'package:ticket_alternative/views/panel_right.dart';
+import 'package:ticket_alternative/printservice/defect_service.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await DefectService().init();
   runApp(const KVBTicketautomatApp());
 }
 
@@ -21,7 +24,90 @@ class KVBTicketautomatApp extends StatelessWidget {
         fontFamily: 'Arial',
         primaryColor: AppColors.primary,
       ),
-      home: const TicketautomatScreen(),
+      home: const DefectWrapper(child: TicketautomatScreen()),
+    );
+  }
+}
+
+class DefectWrapper extends StatelessWidget {
+  final Widget child;
+  const DefectWrapper({super.key, required this.child});
+
+  @override
+  Widget build(BuildContext context) {
+    return ValueListenableBuilder<bool>(
+      valueListenable: DefectService().isDefectActive,
+      builder: (context, isDefect, _) {
+        return Stack(
+          children: [
+            child,
+            if (isDefect)
+              Positioned.fill(
+                child: Container(
+                  color: AppColors.backgroundLight,
+                  child: Center(
+                    child: Container(
+                      padding: const EdgeInsets.all(40),
+                      margin: const EdgeInsets.all(40),
+                      decoration: BoxDecoration(
+                        color: AppColors.white,
+                        border: Border.all(color: AppColors.black, width: 4),
+                        boxShadow: const [
+                          BoxShadow(
+                            color: AppColors.black,
+                            offset: Offset(10, 10),
+                          ),
+                        ],
+                      ),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const Icon(
+                            Icons.warning_amber_rounded,
+                            color: AppColors.primary,
+                            size: 100,
+                          ),
+                          const SizedBox(height: 30),
+                          const Text(
+                            'AUSSER BETRIEB',
+                            style: TextStyle(
+                              fontSize: 42,
+                              fontWeight: FontWeight.w900,
+                              color: AppColors.primary,
+                              decoration: TextDecoration.none,
+                            ),
+                          ),
+                          const SizedBox(height: 20),
+                          const Text(
+                            'DEFEKT - Wir arbeiten an einer Lösung.\n\nBitte besuchen Sie uns an einem anderen Automaten.\nWir entschuldigen uns für die Unannehmlichkeiten.',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.w700,
+                              color: AppColors.textDark,
+                              height: 1.5,
+                              decoration: TextDecoration.none,
+                            ),
+                          ),
+                          const SizedBox(height: 40),
+                          const Text(
+                            'KVB - Kölner Verkehrs-Betriebe AG',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                              color: AppColors.textMedium,
+                              decoration: TextDecoration.none,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+          ],
+        );
+      },
     );
   }
 }
