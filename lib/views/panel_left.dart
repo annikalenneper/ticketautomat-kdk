@@ -57,7 +57,7 @@ class PanelLeft extends StatelessWidget {
 
                         showDialog(
                           context: context,
-                          builder: (context) => PrinterDialog(
+                          builder: (context) => PrinterDialog.ticket(
                             from: 'BüZe Ehrenfeld - Unten durch (West)',
                             to: toController.text,
                             preis: preisString,

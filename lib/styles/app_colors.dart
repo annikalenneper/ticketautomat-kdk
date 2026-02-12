@@ -19,4 +19,5 @@ class AppColors {
   static const Color divider = Color(0xFF808080);
   static const Color success = Color(0xFF008000);
   static const Color cancel = Color(0xFF808080);
+  static const Color attention = Color(0xFFFFD700); // Yellow/Gold for feedback/ratings
 }

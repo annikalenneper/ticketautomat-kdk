@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ticket_alternative/styles/app_colors.dart';
 import 'package:ticket_alternative/headers/help_header.dart';
 import 'package:ticket_alternative/dialogues/faq_dialogues.dart';
+import 'package:ticket_alternative/dialogues/support_terminal_dialog.dart';
 
 class HilfeCenter extends StatefulWidget {
   const HilfeCenter({super.key});
@@ -11,8 +12,6 @@ class HilfeCenter extends StatefulWidget {
 }
 
 class _HilfeCenterState extends State<HilfeCenter> {
-  int? _expandedIndex;
-
   final List<FAQItem> _faqItems = [
     FAQItem(
       title: 'Wo bin ich?',
@@ -126,6 +125,11 @@ class _HilfeCenterState extends State<HilfeCenter> {
             context: context,
             builder: (context) => const CodeOfConductDialog(),
           );
+        } else if (item.title == 'Kann der Automat noch mehr?') {
+          showDialog(
+            context: context,
+            builder: (context) => const AutomatFeaturesDialog(),
+          );
         } else {
           showDialog(
             context: context,
@@ -166,41 +170,49 @@ class _HilfeCenterState extends State<HilfeCenter> {
   }
 
   Widget _buildSupportSection() {
-    return Container(
-      padding: const EdgeInsets.all(25),
-      decoration: BoxDecoration(
-        color: AppColors.secondary,
-        border: Border.all(color: AppColors.black, width: 2),
-        boxShadow: const [
-          BoxShadow(
-            color: AppColors.black,
-            offset: Offset(6, 6),
-          ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Text(
-            '📞 KUNDENSUPPORT-TERMINAL',
-            style: TextStyle(
-              fontSize: 22,
-              fontWeight: FontWeight.w900,
-              color: AppColors.white,
-              letterSpacing: 1,
+    return GestureDetector(
+      onTap: () {
+        showDialog(
+          context: context,
+          builder: (context) => const SupportTerminalDialog(),
+        );
+      },
+      child: Container(
+        padding: const EdgeInsets.all(25),
+        decoration: BoxDecoration(
+          color: AppColors.secondary,
+          border: Border.all(color: AppColors.black, width: 2),
+          boxShadow: const [
+            BoxShadow(
+              color: AppColors.black,
+              offset: Offset(6, 6),
             ),
-          ),
-          const SizedBox(height: 16),
-          const Text(
-            'ANFRAGE NICHT GEKLÄRT? KONTAKTIEREN SIE UNSERE ZENTRALE DIREKT ÜBER DIESES TERMINAL.',
-            style: TextStyle(
-              fontSize: 14,
-              color: AppColors.white,
-              fontWeight: FontWeight.w600,
-              height: 1.5,
+          ],
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text(
+              '📞 KUNDENSUPPORT-TERMINAL',
+              style: TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.w900,
+                color: AppColors.white,
+                letterSpacing: 1,
+              ),
             ),
-          ),
-        ],
+            const SizedBox(height: 16),
+            const Text(
+              'ANFRAGE NICHT GEKLÄRT? KONTAKTIEREN SIE UNSERE ZENTRALE DIREKT ÜBER DIESES TERMINAL.',
+              style: TextStyle(
+                fontSize: 14,
+                color: AppColors.white,
+                fontWeight: FontWeight.w600,
+                height: 1.5,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

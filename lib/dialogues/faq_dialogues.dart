@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:ticket_alternative/printservice/quest_printer_dialog.dart';
-import 'package:ticket_alternative/dialogues/support_terminal_dialogues.dart';
+import 'package:ticket_alternative/printservice/printer_dialog.dart';
+import 'package:ticket_alternative/dialogues/support_terminal_dialog.dart';
 import 'package:ticket_alternative/styles/app_colors.dart';
 
 class FAQDialog extends StatelessWidget {
@@ -427,11 +427,17 @@ class AutomatFeaturesDialog extends StatelessWidget {
         margin: const EdgeInsets.only(bottom: 12),
         padding: const EdgeInsets.all(15),
         decoration: BoxDecoration(
-          color: hasAction ? AppColors.primary.withOpacity(0.1) : AppColors.backgroundLight,
+          color: hasAction ? AppColors.white : AppColors.backgroundLight,
           border: Border.all(
             color: hasAction ? AppColors.primary : AppColors.black,
-            width: hasAction ? 3 : 2,
+            width: hasAction ? 2 : 2,
           ),
+          boxShadow: hasAction ? [
+            const BoxShadow(
+              color: AppColors.black,
+              offset: Offset(4, 4),
+            ),
+          ] : null,
         ),
         child: Row(
           children: [
@@ -540,7 +546,7 @@ class _QuestDialogState extends State<QuestDialog> {
     // Oeffne Drucker-Dialog mit Quest-Daten
     showDialog(
       context: context,
-      builder: (context) => QuestPrinterDialog(
+      builder: (context) => PrinterDialog.quest(
         category: _selectedCategory!,
         questText: _selectedQuest!['aufgabe'] as String,
       ),

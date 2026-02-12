@@ -2,18 +2,207 @@ import 'package:flutter/material.dart';
 import 'package:ticket_alternative/styles/app_colors.dart';
 import 'print_service.dart';
 import 'ticket_template.dart';
+import 'quest_ticket.dart';
 
-class PrinterDialog extends StatefulWidget {
+/// Abstrakter Print-Inhalt
+sealed class PrintContent {
+  const PrintContent();
+  
+  /// Titel für den Dialog-Header
+  String get dialogTitle;
+  
+  /// Farbe für den Header
+  Color get headerColor;
+  
+  /// Erfolgsmeldung
+  String get successMessage;
+  
+  /// Status-Text beim Drucken
+  String get printingMessage;
+  
+  /// Baut die Vorschau-Widget
+  Widget buildPreview();
+  
+  /// Führt den Druckvorgang aus
+  Future<bool> print(PrintService service);
+}
+
+/// Ticket-Inhalt für Fahrten
+class TicketContent extends PrintContent {
   final String from;
   final String to;
   final String preis;
 
-  const PrinterDialog({
-    super.key,
+  const TicketContent({
     required this.from,
     required this.to,
     required this.preis,
   });
+
+  @override
+  String get dialogTitle => 'Drucker auswählen';
+
+  @override
+  Color get headerColor => AppColors.primary;
+
+  @override
+  String get successMessage => 'Ticket erfolgreich gedruckt!';
+
+  @override
+  String get printingMessage => 'Drucke Ticket...';
+
+  @override
+  Widget buildPreview() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _buildPreviewRow('Von:', from),
+        const SizedBox(height: 8),
+        _buildPreviewRow('Nach:', to),
+        const SizedBox(height: 8),
+        _buildPreviewRow('Preis:', preis),
+      ],
+    );
+  }
+
+  Widget _buildPreviewRow(String label, String value) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SizedBox(
+          width: 60,
+          child: Text(
+            label,
+            style: const TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 14,
+            ),
+          ),
+        ),
+        Expanded(
+          child: Text(
+            value,
+            style: const TextStyle(fontSize: 14),
+          ),
+        ),
+      ],
+    );
+  }
+
+  @override
+  Future<bool> print(PrintService service) async {
+    final ticketData = TicketData(
+      from: from,
+      to: to,
+      dateTime: DateTime.now(),
+      preis: preis,
+      ticketType: 'Einzelticket',
+    );
+    return await service.printTicket(ticketData);
+  }
+}
+
+/// Quest-Inhalt für Quests
+class QuestContent extends PrintContent {
+  final String category;
+  final String questText;
+
+  const QuestContent({
+    required this.category,
+    required this.questText,
+  });
+
+  @override
+  String get dialogTitle => 'Quest drucken';
+
+  @override
+  Color get headerColor => AppColors.secondary;
+
+  @override
+  String get successMessage => 'Quest erfolgreich gedruckt!';
+
+  @override
+  String get printingMessage => 'Drucke Quest...';
+
+  @override
+  Widget buildPreview() {
+    return Container(
+      padding: const EdgeInsets.all(15),
+      decoration: BoxDecoration(
+        color: AppColors.backgroundLight,
+        border: Border.all(color: AppColors.black, width: 2),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'KATEGORIE: ${category.toUpperCase()}',
+            style: const TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 14,
+            ),
+          ),
+          const SizedBox(height: 10),
+          const Text(
+            'AUFGABE:',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 14,
+            ),
+          ),
+          const SizedBox(height: 5),
+          Text(
+            questText,
+            style: const TextStyle(fontSize: 14),
+          ),
+        ],
+      ),
+    );
+  }
+
+  @override
+  Future<bool> print(PrintService service) async {
+    final questBytes = await buildQuestTicket(
+      category: category,
+      questText: questText,
+    );
+    return await service.printRawBytes(questBytes);
+  }
+}
+
+/// Gemeinsamer Drucker-Dialog für alle Print-Inhalte
+class PrinterDialog extends StatefulWidget {
+  final PrintContent content;
+
+  const PrinterDialog({
+    super.key,
+    required this.content,
+  });
+
+  /// Factory für Ticket-Druck
+  factory PrinterDialog.ticket({
+    Key? key,
+    required String from,
+    required String to,
+    required String preis,
+  }) {
+    return PrinterDialog(
+      key: key,
+      content: TicketContent(from: from, to: to, preis: preis),
+    );
+  }
+
+  /// Factory für Quest-Druck
+  factory PrinterDialog.quest({
+    Key? key,
+    required String category,
+    required String questText,
+  }) {
+    return PrinterDialog(
+      key: key,
+      content: QuestContent(category: category, questText: questText),
+    );
+  }
 
   @override
   State<PrinterDialog> createState() => _PrinterDialogState();
@@ -63,24 +252,16 @@ class _PrinterDialogState extends State<PrinterDialog> {
 
       setState(() {
         _isPrinting = true;
-        _statusMessage = 'Drucke Ticket...';
+        _statusMessage = widget.content.printingMessage;
       });
 
-      final ticketData = TicketData(
-        from: widget.from,
-        to: widget.to,
-        dateTime: DateTime.now(),
-        preis: widget.preis,
-        ticketType: 'Einzelticket',
-      );
-
-      final printResult = await PrintService().printTicket(ticketData);
+      final printResult = await widget.content.print(PrintService());
 
       if (printResult) {
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('Ticket erfolgreich gedruckt!'),
+            SnackBar(
+              content: Text(widget.content.successMessage),
               backgroundColor: AppColors.success,
             ),
           );
@@ -124,147 +305,132 @@ class _PrinterDialogState extends State<PrinterDialog> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
+            // Header
             Container(
               width: double.infinity,
               padding: const EdgeInsets.all(20),
-              decoration: const BoxDecoration(
-                color: AppColors.primary,
-                borderRadius: BorderRadius.only(
+              decoration: BoxDecoration(
+                color: widget.content.headerColor,
+                borderRadius: const BorderRadius.only(
                   topLeft: Radius.circular(8),
                   topRight: Radius.circular(8),
                 ),
               ),
-              child: const Text(
-                'Drucker auswählen',
-                style: TextStyle(
+              child: Text(
+                widget.content.dialogTitle,
+                style: const TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.w700,
                   color: AppColors.white,
                 ),
               ),
             ),
+            // Vorschau für Quest-Content
+            if (widget.content is QuestContent)
+              Padding(
+                padding: const EdgeInsets.all(15),
+                child: widget.content.buildPreview(),
+              ),
+            // Status-Nachricht
             if (_statusMessage.isNotEmpty)
               Padding(
                 padding: const EdgeInsets.all(15),
                 child: Text(
                   _statusMessage,
-                  style: const TextStyle(
-                    color: AppColors.textMedium,
-                    fontSize: 14,
+                  style: TextStyle(
+                    color: _statusMessage.contains('Fehler')
+                        ? AppColors.cancel
+                        : AppColors.textDark,
                   ),
                 ),
               ),
-            Flexible(
-              child: FutureBuilder<List<BluetoothDevice>>(
-                future: _printers,
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return Padding(
-                      padding: const EdgeInsets.all(20),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: const [
-                          CircularProgressIndicator(),
-                          SizedBox(height: 20),
-                          Text('Suche nach Druckern...'),
-                        ],
-                      ),
-                    );
-                  }
-
-                  if (snapshot.hasError) {
-                    return Padding(
-                      padding: const EdgeInsets.all(20),
-                      child: Text(
-                        'Fehler: ${snapshot.error}',
-                        textAlign: TextAlign.center,
-                      ),
-                    );
-                  }
-
-                  if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                    return Padding(
-                      padding: const EdgeInsets.all(20),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: const [
-                          Icon(
-                            Icons.print_disabled,
-                            size: 48,
-                            color: AppColors.textMedium,
-                          ),
-                          SizedBox(height: 16),
-                          Text(
-                            'Keine Drucker gefunden.\n\nStelle sicher, dass dein Drucker:\n- Eingeschaltet ist\n- Mit deinem Gerät gekoppelt ist',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: AppColors.textMedium,
-                              fontSize: 14,
-                            ),
-                          ),
-                        ],
-                      ),
-                    );
-                  }
-
-                  return ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: snapshot.data!.length,
-                    itemBuilder: (context, index) {
-                      final device = snapshot.data![index];
-                      final isDisabled = _isConnecting || _isPrinting;
-
-                      return ListTile(
-                        leading: Icon(
-                          Icons.print,
-                          color: isDisabled
-                              ? AppColors.inputBorder
-                              : AppColors.primary,
-                        ),
-                        title: Text(
-                          device.name,
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500,
-                            color: isDisabled
-                                ? AppColors.inputBorder
-                                : AppColors.textDark,
-                          ),
-                        ),
-                        subtitle: Text(
-                          device.macAddress,
-                          style: const TextStyle(fontSize: 12),
-                        ),
-                        onTap: isDisabled
-                            ? null
-                            : () => _connectAndPrint(device),
-                        enabled: !isDisabled,
-                      );
-                    },
-                  );
-                },
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(15),
-              child: SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: (_isConnecting || _isPrinting)
-                      ? null
-                      : () => Navigator.of(context).pop(),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.cancel,
-                    foregroundColor: AppColors.white,
-                    padding: const EdgeInsets.symmetric(vertical: 12),
-                    disabledBackgroundColor: AppColors.inputBorder,
-                  ),
-                  child: const Text('Abbrechen'),
-                ),
-              ),
-            ),
+            // Lade-Indikator
+            if (_isConnecting || _isPrinting)
+              const Padding(
+                padding: EdgeInsets.all(20),
+                child: CircularProgressIndicator(),
+              )
+            else
+              // Drucker-Liste
+              _buildPrinterList(),
+            // Buttons
+            _buildButtons(),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _buildPrinterList() {
+    return FutureBuilder<List<BluetoothDevice>>(
+      future: _printers,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Padding(
+            padding: EdgeInsets.all(20),
+            child: CircularProgressIndicator(),
+          );
+        }
+
+        if (snapshot.hasError) {
+          return Padding(
+            padding: const EdgeInsets.all(15),
+            child: Text('Fehler: ${snapshot.error}'),
+          );
+        }
+
+        final printers = snapshot.data ?? [];
+
+        if (printers.isEmpty) {
+          return const Padding(
+            padding: EdgeInsets.all(15),
+            child: Text('Keine Drucker gefunden'),
+          );
+        }
+
+        return ConstrainedBox(
+          constraints: const BoxConstraints(maxHeight: 200),
+          child: ListView.builder(
+            shrinkWrap: true,
+            itemCount: printers.length,
+            itemBuilder: (context, index) {
+              final printer = printers[index];
+              return ListTile(
+                leading: const Icon(Icons.print),
+                title: Text(printer.name),
+                subtitle: Text(printer.macAddress),
+                onTap: () => _connectAndPrint(printer),
+              );
+            },
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildButtons() {
+    return Container(
+      padding: const EdgeInsets.all(15),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          TextButton(
+            onPressed: () {
+              setState(() {
+                _printers = _initializeAndScan();
+              });
+            },
+            child: const Text('Neu scannen'),
+          ),
+          const SizedBox(width: 10),
+          ElevatedButton(
+            onPressed: () => Navigator.of(context).pop(),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: AppColors.cancel,
+            ),
+            child: const Text('Abbrechen'),
+          ),
+        ],
       ),
     );
   }
