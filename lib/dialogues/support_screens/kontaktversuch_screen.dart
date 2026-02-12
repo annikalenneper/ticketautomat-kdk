@@ -3,13 +3,11 @@ import 'package:ticket_alternative/styles/app_colors.dart';
 
 /// Screen 6: Kontaktversuch (vorher Screen 5)
 class KontaktversuchScreen extends StatefulWidget {
-  final VoidCallback onRetry;
-  final VoidCallback onBack;
+  final VoidCallback onClose;
 
   const KontaktversuchScreen({
     super.key,
-    required this.onRetry,
-    required this.onBack,
+    required this.onClose,
   });
 
   @override
@@ -126,68 +124,32 @@ class _KontaktversuchScreenState extends State<KontaktversuchScreen> {
             color: AppColors.primary,
           ),
           const SizedBox(height: 30),
-          Row(
-            children: [
-              Expanded(
-                child: GestureDetector(
-                  onTap: widget.onRetry,
-                  child: Container(
-                    padding: const EdgeInsets.all(15),
-                    decoration: BoxDecoration(
-                      color: AppColors.primary,
-                      border: Border.all(color: AppColors.black, width: 2),
-                      boxShadow: const [
-                        BoxShadow(
-                          color: AppColors.black,
-                          offset: Offset(4, 4),
-                        ),
-                      ],
-                    ),
-                    child: const Center(
-                      child: Text(
-                        'ERNEUT VERSUCHEN',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w800,
-                          color: AppColors.white,
-                        ),
-                      ),
-                    ),
+          GestureDetector(
+            onTap: widget.onClose,
+            child: Container(
+              width: double.infinity,
+              padding: const EdgeInsets.all(15),
+              decoration: BoxDecoration(
+                color: AppColors.primary,
+                border: Border.all(color: AppColors.black, width: 2),
+                boxShadow: const [
+                  BoxShadow(
+                    color: AppColors.black,
+                    offset: Offset(4, 4),
+                  ),
+                ],
+              ),
+              child: const Center(
+                child: Text(
+                  'SCHLIEßEN',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w800,
+                    color: AppColors.white,
                   ),
                 ),
               ),
-              const SizedBox(width: 15),
-              Expanded(
-                child: GestureDetector(
-                  onTap: widget.onBack,
-                  child: Container(
-                    padding: const EdgeInsets.all(15),
-                    decoration: BoxDecoration(
-                      color: AppColors.cancel,
-                      border: Border.all(color: AppColors.black, width: 2),
-                      boxShadow: const [
-                        BoxShadow(
-                          color: AppColors.black,
-                          offset: Offset(4, 4),
-                        ),
-                      ],
-                    ),
-                    child: const Center(
-                      child: Text(
-                        'ZURÜCK ZUM START',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w800,
-                          color: AppColors.white,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ],
+            ),
           ),
         ],
       ],

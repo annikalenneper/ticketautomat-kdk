@@ -1,9 +1,11 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:ticket_alternative/printservice/printer_dialog.dart';
-import 'package:ticket_alternative/dialogues/support_terminal_dialog.dart';
 import 'package:ticket_alternative/styles/app_colors.dart';
+import 'package:ticket_alternative/printservice/quest_ticket.dart';
+import 'package:ticket_alternative/dialogues/print_dialogs.dart';
+import 'package:ticket_alternative/dialogues/button_metrics_dialog.dart';
+import 'package:ticket_alternative/models/button_metrics.dart';
 
 class FAQDialog extends StatelessWidget {
   final String title;
@@ -330,10 +332,16 @@ class AutomatFeaturesDialog extends StatelessWidget {
         'action': 'quest',
       },
       {
-        'icon': Icons.support_agent,
-        'title': 'Kundensupport',
-        'description': 'Wir kuemmern uns sofort um Ihr Anliegen.',
-        'action': 'support',
+        'icon': Icons.touch_app,
+        'title': 'Push the Button',
+        'description': 'Drueck den Button!',
+        'action': 'button',
+      },
+      {
+        'icon': Icons.analytics,
+        'title': 'Button Metriken',
+        'description': 'Statistiken zum Button einsehen',
+        'action': 'metrics',
       },
     ];
 
@@ -415,10 +423,15 @@ class AutomatFeaturesDialog extends StatelessWidget {
                   context: context,
                   builder: (context) => const QuestDialog(),
                 );
-              } else if (action == 'support') {
+              } else if (action == 'button') {
                 showDialog(
                   context: context,
-                  builder: (context) => const SupportTerminalDialog(),
+                  builder: (context) => const PushTheButtonDialog(),
+                );
+              } else if (action == 'metrics') {
+                showDialog(
+                  context: context,
+                  builder: (context) => const ButtonMetricsDialog(),
                 );
               }
             }
@@ -500,8 +513,6 @@ class QuestDialog extends StatefulWidget {
 }
 
 class _QuestDialogState extends State<QuestDialog> {
-  String? _selectedCategory;
-  Map<String, dynamic>? _selectedQuest;
   List<Map<String, dynamic>> _quests = [];
   bool _isLoading = true;
   bool _isPrinting = false;
@@ -527,30 +538,50 @@ class _QuestDialogState extends State<QuestDialog> {
     }
   }
 
-  void _selectRandomQuest(String category) {
+  Future<void> _selectAndPrintQuest(String category) async {
     final categoryQuests = _quests.where((q) => q['kategorie'] == category).toList();
-    if (categoryQuests.isNotEmpty) {
-      categoryQuests.shuffle();
-      setState(() {
-        _selectedCategory = category;
-        _selectedQuest = categoryQuests.first;
-      });
+    if (categoryQuests.isEmpty) return;
+    
+    categoryQuests.shuffle();
+    final selectedQuest = categoryQuests.first;
+    
+    setState(() {
+      _isPrinting = true;
+    });
+    
+    try {
+      // Direkt drucken
+      await buildQuestTicket(
+        category: category,
+        questText: selectedQuest['aufgabe'] as String,
+      );
+      
+      // Simuliere Druckvorgang
+      await Future.delayed(const Duration(seconds: 2));
+      
+      if (mounted) {
+        Navigator.of(context).pop();
+        
+        // Zeige "Entnehmen Sie Ihr Ticket" Dialog
+        showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (context) => const TicketReceiptDialog(),
+        );
+      }
+    } catch (e) {
+      if (mounted) {
+        setState(() {
+          _isPrinting = false;
+        });
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Fehler beim Drucken: $e'),
+            backgroundColor: AppColors.cancel,
+          ),
+        );
+      }
     }
-  }
-
-  Future<void> _printQuest() async {
-    if (_selectedQuest == null) return;
-    
-    Navigator.of(context).pop();
-    
-    // Oeffne Drucker-Dialog mit Quest-Daten
-    showDialog(
-      context: context,
-      builder: (context) => PrinterDialog.quest(
-        category: _selectedCategory!,
-        questText: _selectedQuest!['aufgabe'] as String,
-      ),
-    );
   }
 
   @override
@@ -619,108 +650,49 @@ class _QuestDialogState extends State<QuestDialog> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      'WAEHLE EINE KATEGORIE:',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w800,
-                        color: AppColors.textDark,
-                      ),
-                    ),
-                    const SizedBox(height: 15),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: _buildCategoryButton(
-                            'Schnitzeljagd',
-                            Icons.search,
+                    if (_isPrinting)
+                      const Center(
+                        child: Padding(
+                          padding: EdgeInsets.all(40),
+                          child: Column(
+                            children: [
+                              CircularProgressIndicator(),
+                              SizedBox(height: 20),
+                              Text(
+                                'DRUCKT...',
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w800,
+                                  color: AppColors.textDark,
+                                ),
+                              ),
+                            ],
                           ),
                         ),
-                        const SizedBox(width: 15),
-                        Expanded(
-                          child: _buildCategoryButton(
-                            'Interaktion',
-                            Icons.people,
-                          ),
-                        ),
-                      ],
-                    ),
-                    if (_selectedQuest != null) ...[
-                      const SizedBox(height: 25),
-                      Container(
-                        width: double.infinity,
-                        padding: const EdgeInsets.all(20),
-                        decoration: BoxDecoration(
-                          color: AppColors.backgroundLight,
-                          border: Border.all(color: AppColors.black, width: 2),
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'DEINE MISSION:',
-                              style: TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w800,
-                                color: AppColors.primary,
-                              ),
-                            ),
-                            const SizedBox(height: 10),
-                            Text(
-                              '???????????',
-                              style: const TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.w700,
-                                color: AppColors.textDark,
-                                height: 1.4,
-                              ),
-                            ),
-                          ],
+                      )
+                    else ...[
+                      const Text(
+                        'WAEHLE EINE KATEGORIE:',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w800,
+                          color: AppColors.textDark,
                         ),
                       ),
-                      const SizedBox(height: 20),
+                      const SizedBox(height: 15),
                       Row(
                         children: [
                           Expanded(
-                            child: ElevatedButton.icon(
-                              onPressed: () => _selectRandomQuest(_selectedCategory!),
-                              icon: const Icon(Icons.refresh),
-                              label: const Text('ANDERE MISSION'),
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: AppColors.backgroundLight,
-                                foregroundColor: AppColors.textDark,
-                                padding: const EdgeInsets.symmetric(vertical: 15),
-                                side: const BorderSide(color: AppColors.black, width: 2),
-                                shape: const RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.zero,
-                                ),
-                              ),
+                            child: _buildCategoryButton(
+                              'Schnitzeljagd',
+                              Icons.search,
                             ),
                           ),
                           const SizedBox(width: 15),
                           Expanded(
-                            child: ElevatedButton.icon(
-                              onPressed: _isPrinting ? null : _printQuest,
-                              icon: _isPrinting
-                                  ? const SizedBox(
-                                      width: 20,
-                                      height: 20,
-                                      child: CircularProgressIndicator(
-                                        strokeWidth: 2,
-                                        color: AppColors.white,
-                                      ),
-                                    )
-                                  : const Icon(Icons.print),
-                              label: Text(_isPrinting ? 'DRUCKT...' : 'DRUCKEN'),
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: AppColors.primary,
-                                foregroundColor: AppColors.white,
-                                padding: const EdgeInsets.symmetric(vertical: 15),
-                                side: const BorderSide(color: AppColors.black, width: 2),
-                                shape: const RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.zero,
-                                ),
-                              ),
+                            child: _buildCategoryButton(
+                              'Interaktion',
+                              Icons.people,
                             ),
                           ),
                         ],
@@ -736,21 +708,20 @@ class _QuestDialogState extends State<QuestDialog> {
   }
 
   Widget _buildCategoryButton(String category, IconData icon) {
-    final isSelected = _selectedCategory == category;
     return GestureDetector(
-      onTap: () => _selectRandomQuest(category),
+      onTap: _isPrinting ? null : () => _selectAndPrintQuest(category),
       child: Container(
         padding: const EdgeInsets.all(20),
         decoration: BoxDecoration(
-          color: isSelected ? AppColors.primary : AppColors.white,
+          color: AppColors.white,
           border: Border.all(
             color: AppColors.black,
-            width: isSelected ? 3 : 2,
+            width: 2,
           ),
-          boxShadow: [
+          boxShadow: const [
             BoxShadow(
               color: AppColors.black,
-              offset: Offset(isSelected ? 2 : 4, isSelected ? 2 : 4),
+              offset: Offset(4, 4),
             ),
           ],
         ),
@@ -759,15 +730,161 @@ class _QuestDialogState extends State<QuestDialog> {
             Icon(
               icon,
               size: 40,
-              color: isSelected ? AppColors.white : AppColors.textDark,
+              color: AppColors.textDark,
             ),
             const SizedBox(height: 10),
             Text(
               category.toUpperCase(),
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.w800,
-                color: isSelected ? AppColors.white : AppColors.textDark,
+                color: AppColors.textDark,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class PushTheButtonDialog extends StatefulWidget {
+  const PushTheButtonDialog({super.key});
+
+  @override
+  State<PushTheButtonDialog> createState() => _PushTheButtonDialogState();
+}
+
+class _PushTheButtonDialogState extends State<PushTheButtonDialog> {
+  int _buttonPressCount = 0;
+  List<ButtonPushData> _pushData = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _loadData();
+  }
+
+  Future<void> _loadData() async {
+    final data = await ButtonMetricsService.loadPushData();
+    setState(() {
+      _pushData = data;
+      _buttonPressCount = data.length;
+    });
+  }
+
+  Future<void> _incrementCounter() async {
+    await ButtonMetricsService.recordPush(_pushData);
+    setState(() {
+      _buttonPressCount = _pushData.length;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Dialog(
+      backgroundColor: Colors.transparent,
+      insetPadding: const EdgeInsets.symmetric(horizontal: 30, vertical: 30),
+      child: Container(
+        decoration: BoxDecoration(
+          color: AppColors.white,
+          border: Border.all(color: AppColors.black, width: 3),
+          boxShadow: const [
+            BoxShadow(
+              color: AppColors.black,
+              offset: Offset(8, 8),
+            ),
+          ],
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            // Header
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+              decoration: const BoxDecoration(
+                color: AppColors.secondary,
+                border: Border(
+                  bottom: BorderSide(color: AppColors.black, width: 2),
+                ),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text(
+                    'PUSH THE BUTTON',
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w900,
+                      color: AppColors.white,
+                      letterSpacing: 1.5,
+                    ),
+                  ),
+                  IconButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                      showDialog(
+                        context: context,
+                        builder: (context) => const AutomatFeaturesDialog(),
+                      );
+                    },
+                    icon: const Icon(
+                      Icons.close,
+                      color: AppColors.white,
+                      size: 26,
+                    ),
+                    padding: EdgeInsets.zero,
+                    constraints: const BoxConstraints(),
+                  ),
+                ],
+              ),
+            ),
+            // Content
+            Padding(
+              padding: const EdgeInsets.all(30),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  GestureDetector(
+                    onTap: _incrementCounter,
+                    child: Container(
+                      width: 200,
+                      height: 200,
+                      decoration: BoxDecoration(
+                        color: AppColors.secondary,
+                        border: Border.all(color: AppColors.black, width: 3),
+                        boxShadow: const [
+                          BoxShadow(
+                            color: AppColors.black,
+                            offset: Offset(6, 6),
+                          ),
+                        ],
+                      ),
+                      child: const Center(
+                        child: Text(
+                          'PUSH',
+                          style: TextStyle(
+                            fontSize: 32,
+                            fontWeight: FontWeight.w900,
+                            color: AppColors.white,
+                            letterSpacing: 2,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 30),
+                  Text(
+                    'Der Button wurde insgesamt $_buttonPressCount mal gedrückt.',
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                      color: AppColors.textDark,
+                    ),
+                  ),
+                ],
               ),
             ),
           ],

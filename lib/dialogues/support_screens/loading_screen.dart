@@ -29,11 +29,22 @@ class LoadingScreen extends StatelessWidget {
             ),
             SizedBox(height: 25),
             Text(
+              'Wir kümmern uns sofort um Ihr Anliegen.',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w700,
+                color: AppColors.textDark,
+                fontStyle: FontStyle.italic,
+              ),
+            ),
+            SizedBox(height: 10),
+            Text(
               'Bitte warten...',
               style: TextStyle(
-                fontSize: 18,
+                fontSize: 14,
                 fontWeight: FontWeight.w800,
-                color: AppColors.textDark,
+                color: AppColors.textLight,
                 letterSpacing: 1.2,
               ),
             ),

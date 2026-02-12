@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:ticket_alternative/styles/app_colors.dart';
-import 'package:ticket_alternative/printservice/printer_dialog.dart';
 import 'package:ticket_alternative/models/haltestelle.dart';
+import 'package:ticket_alternative/printservice/print_service.dart';
+import 'package:ticket_alternative/printservice/ticket_template.dart';
+import 'package:ticket_alternative/dialogues/print_dialogs.dart';
 
 class PanelLeft extends StatelessWidget {
   final TextEditingController toController;
@@ -50,19 +52,55 @@ class PanelLeft extends StatelessWidget {
               child: ElevatedButton(
                 onPressed: toController.text.isEmpty
                     ? null
-                    : () {
+                    : () async {
                         // Hole Preis aus JSON-Daten
                         final haltestelle = HaltestellenService.findByName(toController.text);
                         final preisString = haltestelle?.preis ?? '0';
 
+                        // Zeige "Druckt..."-Dialog
                         showDialog(
                           context: context,
-                          builder: (context) => PrinterDialog.ticket(
+                          barrierDismissible: false,
+                          builder: (context) => const PrintingDialog(),
+                        );
+
+                        try {
+                          // Direkt drucken
+                          final ticketData = TicketData(
                             from: 'BüZe Ehrenfeld - Unten durch (West)',
                             to: toController.text,
+                            dateTime: DateTime.now(),
                             preis: preisString,
-                          ),
-                        );
+                            ticketType: 'Einzelticket',
+                          );
+                          
+                          await PrintService().printTicket(ticketData);
+                          
+                          // Simuliere Druckvorgang
+                          await Future.delayed(const Duration(seconds: 2));
+                          
+                          if (context.mounted) {
+                            Navigator.of(context).pop(); // Schließe "Druckt..."-Dialog
+                            
+                            // Zeige "Entnehmen Sie Ihr Ticket"-Dialog
+                            showDialog(
+                              context: context,
+                              barrierDismissible: false,
+                              builder: (context) => const TicketReceiptDialog(),
+                            );
+                          }
+                        } catch (e) {
+                          if (context.mounted) {
+                            Navigator.of(context).pop(); // Schließe "Druckt..."-Dialog
+                            
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text('Fehler beim Drucken: $e'),
+                                backgroundColor: AppColors.cancel,
+                              ),
+                            );
+                          }
+                        }
                       },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.secondary,

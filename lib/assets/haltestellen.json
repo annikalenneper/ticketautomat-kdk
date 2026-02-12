@@ -1,135 +1,324 @@
-{
-  "haltestellen": [
-    {
-      "name": "Hauptbahnhof",
-      "preis": "8.20",
-      "fahrzeit": "21 Minuten",
-      "zwischenstopps": 3
-    },
-    {
-      "name": "Neumarkt",
-      "preis": "2.80",
-      "fahrzeit": "9 Minuten",
-      "zwischenstopps": 5
-    },
-	{
-      "name": "Oben drüber (Nord)",
-      "preis": "100€",
-      "fahrzeit": "Geh die Treppe hoch, du faules Schwein. :)",
-      "zwischenstopps": 4
-    },
-    {
-      "name": "BF Mülheim",
-      "preis": "Ein müder Schenkelklopfer",
-      "fahrzeit": "40 Minuten",
-      "zwischenstopps": 16,
-	  "dialog":"Umleitung: Heute fährt die 18 bis nach Istanbul."
-    },
-	{
-      "name": "Delirium",
-      "preis": "Dein Verstand",
-      "fahrzeit": "12 Stunden",
-      "zwischenstopps": 25
-    },
-	{
-      "name": "Bielefeld",
-      "preis": "4.90",
-      "fahrzeit": "00",
-      "zwischenstopps": 0,
-	  "dialog":"Error."
-    },
-	{
-      "name": "In die Vergangenheit",
-      "preis": "Jegliche Sicherheit",
-      "fahrzeit": "Du hast die Wahl",
-      "zwischenstopps": 5
-    },
-    {
-      "name": "In die Zukunft",
-      "preis": "Deine Lebenszeit",
-      "fahrzeit": "Weit genug",
-      "zwischenstopps": 5
-    },
-	{
-      "name": "Wiener Platz",
-      "preis": "3.65",
-      "fahrzeit": "Brücke offen oder zu? Je nachdem 5 Minuten oder 5 Stunden.",
-      "zwischenstopps": 18
-    },
-	{
-      "name": "Neptunbad",
-      "preis": "500",
-      "fahrzeit": "10 Gehminuten. Einmal durchlüften lassen.",
-      "zwischenstopps": 2
-    },
-	{
-      "name": "Milchstraße",
-      "preis": "Veganes Glitzer ohne Mikroplastik",
-      "fahrzeit": "2 Lichtjahre",
-      "zwischenstopps": 2,
-	  "dialog":"Heute nur per Anhalter durch die Galaxis."
-    },
-	{
-      "name": "Zu mir oder zu dir",
-      "preis": "3 Kondome",
-      "fahrzeit": "Hier könnte deine Handynummer stehen",
-      "zwischenstopps": 0
-    },
-	{
-      "name": "Streichelzoo",
-      "preis": "Liebe, Zuneigung und ein bisschen Heu",
-      "fahrzeit": "8 Minuten",
-      "zwischenstopps": 4
-    },
-	{
-      "name": "Ab nach Hause",
-      "preis": "Was hast du denn noch zu geben?",
-      "fahrzeit": "Hoffentlich nicht zu lang :)",
-      "zwischenstopps": 6,
-	  "dialog":"Hast du alles? Handy? Portmonee? Schlüssel?"
-    },
-	{
-      "name": "Mordor",
-      "preis": "Dein Ring",
-      "fahrzeit": "6 Monate",
-      "zwischenstopps": 3000
-    },
-	{
-      "name": "Endstation Eskalation",
-      "preis": "Deine Würde",
-      "fahrzeit": "5 Minuten",
-      "zwischenstopps": 5,
-	  "dialog":"Bist du sicher?"
-	},
-	{
-      "name": "Ende des Regenbogens",
-      "preis": "Ein bisschen Glitzer und Phantasie",
-      "fahrzeit": "14 Flugminuten",
-      "zwischenstopps": 0
-	},
-	{
-      "name": "Büdchenplatz",
-      "preis": "6€",
-      "fahrzeit": "3 Wegbier",
-      "zwischenstopps": 1
-	},
-	{
-      "name": "Klangquartier",
-      "preis": "Gute Laune",
-      "fahrzeit": "8 Minuten",
-      "zwischenstopps": 3
-	},
-	{
-      "name": "Terminal Tanzalarm",
-      "preis": "Nicht so viel",
-      "fahrzeit": "Hast du bequemes Schuhwerk an? Los gehts!",
-      "zwischenstopps": 5
-	},
-	{
-      "name": "Bass District",
-      "preis": "Ein Hörsturz",
-      "fahrzeit": "17 Minuten",
-      "zwischenstopps": 12
-    }
-  ]
-}
+[
+  {
+    "Name": "Hauptbahnhof",
+    "Preis": "8,20€",
+    "Fahrzeit": "21 Minuten",
+    "Zwischenstopps": "3",
+    "Dialog 1": ""
+  },
+  {
+    "Name": "Neumarkt",
+    "Preis": "2,80€",
+    "Fahrzeit": "9 Minuten",
+    "Zwischenstopps": "5",
+    "Dialog 1": ""
+  },
+  {
+    "Name": "Oben drüber (Nord)",
+    "Preis": "100€",
+    "Fahrzeit": "Geh die Treppe hoch, du faules Schwein. :)",
+    "Zwischenstopps": "4",
+    "Dialog 1": ""
+  },
+  {
+    "Name": "BF Mülheim",
+    "Preis": "Ein müder Schenkelklopfer",
+    "Fahrzeit": "40 Minuten",
+    "Zwischenstopps": "16",
+    "Dialog 1": "Umleitung: Heute fährt die 18 bis nach Istanbul."
+  },
+  {
+    "Name": "Delirium",
+    "Preis": "Dein Verstand",
+    "Fahrzeit": "12 Stunden",
+    "Zwischenstopps": "25",
+    "Dialog 1": ""
+  },
+  {
+    "Name": "Bielefeld",
+    "Preis": "4,90€",
+    "Fahrzeit": "0",
+    "Zwischenstopps": "0",
+    "Dialog 1": "Error."
+  },
+  {
+    "Name": "In die Vergangenheit",
+    "Preis": "Jegliche Sicherheit",
+    "Fahrzeit": "Du hast die Wahl",
+    "Zwischenstopps": "5",
+    "Dialog 1": ""
+  },
+  {
+    "Name": "In die Zukunft",
+    "Preis": "Deine Lebenszeit",
+    "Fahrzeit": "Weit genug",
+    "Zwischenstopps": "5",
+    "Dialog 1": ""
+  },
+  {
+    "Name": "Wiener Platz",
+    "Preis": "3,65€",
+    "Fahrzeit": "Brücke offen oder zu? Je nachdem 5 Minuten oder 5 Stunden.",
+    "Zwischenstopps": "18",
+    "Dialog 1": ""
+  },
+  {
+    "Name": "Neptunbad",
+    "Preis": "500€",
+    "Fahrzeit": "10 Gehminuten. Einmal durchlüften lassen.",
+    "Zwischenstopps": "2",
+    "Dialog 1": ""
+  },
+  {
+    "Name": "Milchstraße",
+    "Preis": "Veganes Glitzer ohne Mikroplastik",
+    "Fahrzeit": "2 Lichtjahre",
+    "Zwischenstopps": "42",
+    "Dialog 1": "Heute nur per Anhalter durch die Galaxis."
+  },
+  {
+    "Name": "Zu mir oder zu dir",
+    "Preis": "3 Kondome",
+    "Fahrzeit": "Hier könnte deine Handynummer stehen",
+    "Zwischenstopps": "0",
+    "Dialog 1": ""
+  },
+  {
+    "Name": "Streichelzoo",
+    "Preis": "Tierliebe und ein bisschen Heu",
+    "Fahrzeit": "8 Minuten",
+    "Zwischenstopps": "4",
+    "Dialog 1": ""
+  },
+  {
+    "Name": "Ab nach Hause",
+    "Preis": "Was hast du denn noch zu geben?",
+    "Fahrzeit": "Hoffentlich nicht zu lang :)",
+    "Zwischenstopps": "6",
+    "Dialog 1": "Hast du alles? Handy? Portemonnaie? Schlüssel?"
+  },
+  {
+    "Name": "Mordor",
+    "Preis": "Dein Ring",
+    "Fahrzeit": "6 Monate",
+    "Zwischenstopps": "3000",
+    "Dialog 1": ""
+  },
+  {
+    "Name": "Endstation Eskalation",
+    "Preis": "Deine Würde",
+    "Fahrzeit": "5 Minuten",
+    "Zwischenstopps": "5",
+    "Dialog 1": "Bist du sicher?"
+  },
+  {
+    "Name": "Ende des Regenbogens",
+    "Preis": "Ein bisschen Glitzer und Fantasie",
+    "Fahrzeit": "14 Flugminuten",
+    "Zwischenstopps": "0",
+    "Dialog 1": ""
+  },
+  {
+    "Name": "Büdchenplatz",
+    "Preis": "6€",
+    "Fahrzeit": "3 Wegbier",
+    "Zwischenstopps": "1",
+    "Dialog 1": ""
+  },
+  {
+    "Name": "Klangquartier",
+    "Preis": "Gute Laune",
+    "Fahrzeit": "8 Minuten",
+    "Zwischenstopps": "3",
+    "Dialog 1": ""
+  },
+  {
+    "Name": "Terminal Tanzalarm",
+    "Preis": "Nicht so viel",
+    "Fahrzeit": "Hast du bequemes Schuhwerk an? Los geht’s!",
+    "Zwischenstopps": "5",
+    "Dialog 1": ""
+  },
+  {
+    "Name": "Bass District",
+    "Preis": "Ein Hörsturz",
+    "Fahrzeit": "17 Minuten",
+    "Zwischenstopps": "12",
+    "Dialog 1": ""
+  },
+  {
+    "Name": "Dropkirchen",
+    "Preis": "6euro90",
+    "Fahrzeit": "Bis der Drop kommt",
+    "Zwischenstopps": "2",
+    "Dialog 1": ""
+  },
+  {
+    "Name": "Einmal um die Welt",
+    "Preis": "alles was du hast",
+    "Fahrzeit": "80 Tage",
+    "Zwischenstopps": "viele",
+    "Dialog 1": ""
+  },
+  {
+    "Name": "Berlin",
+    "Preis": "deine kölsche Identität",
+    "Fahrzeit": "ein Kasten Kölsch",
+    "Zwischenstopps": "8",
+    "Dialog 1": "nächster Halt, Berlin - Spandau"
+  },
+  {
+    "Name": "Düsseldorf",
+    "Preis": "\"alaaf: gegen \"helau\" tauschen",
+    "Fahrzeit": "45 Minuten",
+    "Zwischenstopps": "7",
+    "Dialog 1": ""
+  },
+  {
+    "Name": "Narnia",
+    "Preis": "ein Kleiderschrank",
+    "Fahrzeit": "eine Minute",
+    "Zwischenstopps": "keine, nur Mäntel im Weg",
+    "Dialog 1": "es ist möglich, dass dir ein Löwe über den Weg läuft"
+  },
+  {
+    "Name": "Fusion Festival",
+    "Preis": "eine Rakete",
+    "Fahrzeit": "5 Tage",
+    "Zwischenstopps": "immer vorne links",
+    "Dialog 1": ""
+  },
+  {
+    "Name": "Weihnachtsmarkt",
+    "Preis": "8 kg Rentierfutter",
+    "Fahrzeit": "eine heilige Nacht",
+    "Zwischenstopps": "im ein oder anderen Kamin",
+    "Dialog 1": "ho, ho, ho"
+  },
+  {
+    "Name": "Dschungelcamp",
+    "Preis": "Bananenbrot",
+    "Fahrzeit": "12 Wochen",
+    "Zwischenstopps": "würdelos",
+    "Dialog 1": ""
+  },
+  {
+    "Name": "Wunderland",
+    "Preis": "den Jabberwalkie besiegen",
+    "Fahrzeit": "mit Alice durch ein schwarzes Wurmloch wandern",
+    "Zwischenstopps": "einiges los!",
+    "Dialog 1": "Bitte der roten Königin aus dem Weg gehen!"
+  },
+  {
+    "Name": "Paradies",
+    "Preis": "Apfel",
+    "Fahrzeit": "2 Sekunden",
+    "Zwischenstopps": "zur Schlange",
+    "Dialog 1": "alle sind nackt"
+  },
+  {
+    "Name": "Schlaraffenland",
+    "Preis": "100 KG SÜẞIGKEITEN",
+    "Fahrzeit": "Bauchschmerzen²",
+    "Zwischenstopps": "289",
+    "Dialog 1": "Zuckerschock mit Willy Wonka"
+  },
+  {
+    "Name": "Schokoladenfabrik",
+    "Preis": "ein goldenes Ticket",
+    "Fahrzeit": "mit ein bisschen Glück geht es schnell",
+    "Zwischenstopps": "12",
+    "Dialog 1": "Don't tell Charlie!"
+  },
+  {
+    "Name": "San Francisco",
+    "Preis": "Blumen im Haar",
+    "Fahrzeit": "eine Woche",
+    "Zwischenstopps": "0",
+    "Dialog 1": "summertime will be a loving there"
+  },
+  {
+    "Name": "Chaos Zentrale",
+    "Preis": "eine Flasche Sekt",
+    "Fahrzeit": "2 Minuten max.",
+    "Zwischenstopps": "Oben drüber und Baller-Büdchen30",
+    "Dialog 1": "nur Liebe!"
+  },
+  {
+    "Name": "Bayern",
+    "Preis": "Lederhosen/Dirndl",
+    "Fahrzeit": "4 Stunden × 2 = sofort wieder umdrehen",
+    "Zwischenstopps": "9",
+    "Dialog 1": "Home is where the Dom is!"
+  },
+  {
+    "Name": "Schule",
+    "Preis": "Lebenserfahrung",
+    "Fahrzeit": "10 Jahre",
+    "Zwischenstopps": "Pubertät",
+    "Dialog 1": ""
+  },
+  {
+    "Name": "Schloss Bensberg",
+    "Preis": "Heidi Klum Merch",
+    "Fahrzeit": "53 Minuten",
+    "Zwischenstopps": "23",
+    "Dialog 1": "Ich habe heute leider kein Foto für dich!!"
+  },
+  {
+    "Name": "Falafelkönig",
+    "Preis": "7,00€",
+    "Fahrzeit": "6,8 Minuten",
+    "Zwischenstopps": "Schlange & Zebrastreifen",
+    "Dialog 1": "Falafel King Sandwich mit Juppiesauce!"
+  },
+  {
+    "Name": "Mond",
+    "Preis": "Liebe & Sternenstaub",
+    "Fahrzeit": "384.400 Km...",
+    "Zwischenstopps": "keine",
+    "Dialog 1": "wird nachts bis zu -127°C kalt"
+  },
+  {
+    "Name": "KdK-Dancefloor",
+    "Preis": "20€",
+    "Fahrzeit": "3h in der Schlange stehen",
+    "Zwischenstopps": "Einlasshütte",
+    "Dialog 1": "schön dass du da bist!"
+  },
+  {
+    "Name": "Winkelgasse",
+    "Preis": "10 Weasley",
+    "Fahrzeit": "9 3/4 Minuten",
+    "Zwischenstopps": "",
+    "Dialog 1": ""
+  },
+  {
+    "Name": "Karaokefloor 2027",
+    "Preis": "Deine Mitarbeit",
+    "Fahrzeit": "365 Tage",
+    "Zwischenstopps": "5 Jahreszeiten",
+    "Dialog 1": ""
+  },
+  {
+    "Name": "KdK 2027",
+    "Preis": "(Alle wie hier drüber)",
+    "Fahrzeit": "",
+    "Zwischenstopps": "",
+    "Dialog 1": ""
+  },
+  {
+    "Name": "Hier bleiben",
+    "Preis": "Nichts!",
+    "Fahrzeit": "0 Minuten",
+    "Zwischenstopps": "0",
+    "Dialog 1": "Bleib doch noch ein bisschen :)"
+  },
+  {
+    "Name": "Bkini Bottom",
+    "Preis": "2 Krabbenburger",
+    "Fahrzeit": "10 Minuten",
+    "Zwischenstopps": "Rock Bottom",
+    "Dialog 1": ""
+  }
+]

@@ -19,7 +19,7 @@
         "id": "antidiskriminierung",
         "title": "Antidiskriminierung",
         "description": "Wir dulden keinerlei Form von Diskriminierung - dazu zählen u.a. Sexismus, Rassismus, Antisemitismus, Queer- und Transfeindlichkeit, Ableismus, Klassismus, Bodyshaming sowie jede Form von Herabwürdigung oder Übergriffigkeit.",
-        "consequences": "Bei Verstößen folgen entsprechende Konsequenzen bis hin zum Veranstaltungsverweis."
+        "consequences": "Bei Verstößen werden entsprechende Konsequenzen bis hin zum Veranstaltungs-Verweis folgen."
     },
     {
       "id": "konsens",
@@ -37,6 +37,22 @@
       ]
     },
     {
+      "id": "kleidung",
+      "title": "No Shirt - No Party!",
+      "description": "Oben-ohne-Feiern ist für uns unangebracht. Damit möchten wir Fairness gegenüber Menschen gewährleisten, deren Oberkörper-Freiheit im öffentlichen Raum nach wie vor untersagt ist. Weiterhin verhindert diese Maßnahme eine Reproduktion von dominanter, raumgreifender und toxischer Männlichkeit."
+    },
+    {
+      "id": "kostueme",
+      "title": "Kostüme",
+      "description": "Karneval lebt von bunten Kostümen und heißt Vielfalt, ausgelassene Freude – und Respekt! Vermeide Kostüme, die diskriminieren, kulturelle Stereotypen oder Gewaltmonopole darstellen.",
+      "guidance": "Falls ihr euch unsicher seid, ob euer Kostüm für alle Menschen respektvoll ist, wählt lieber ein anderes Outfit.",
+      "examples": [
+        "WAFFEN",
+        "Nachahmen von KULTUREN"
+      ],
+      "note": "Das sind zum Beispiel mega uncool."
+    },
+    {
       "id": "toiletten",
       "title": "Toilettenregelung",
       "description": "Um Diskriminierung auf Toiletten zu verhindern, gibt es während der Veranstaltung All-Gender-Toiletten und FLINTA*-Only-Toiletten.",
@@ -50,23 +66,12 @@
     {
       "id": "feedback",
       "title": "Fehlerkultur & Feedback",
-      "description": "Wir machen alle Fehler. Daher bitten wir euch, Menschen Gehör zu schenken, die euch Kritik entgegenbringen. Feedback offen anzunehmen, zuzuhören und verstehen zu wollen fördert den konstruktiven Umgang miteinander. ",
-      "event_feedback": "Auch wir freuen uns über Feedback, um in Zukunft besser zu werden."
+      "description": "Wir machen alle Fehler. Daher bitten wir euch, Menschen Gehör zu schenken, die euch Kritik entgegenbringen. Feedback offen anzunehmen, zuzuhören und verstehen zu wollen fördert den konstruktiven Umgang miteinander."
     },
     {
-      "id": "kostueme",
-      "title": "Kostüme",
-      "description": "KKarneval lebt von bunten Kostümen und heißt Vielfalt, ausgelassene Freude – und Respekt! Vermeide Kostüme, die diskriminieren oder Gewaltmonopole darstellen. ",
-      "examples": [
-        "Waffen",
-        "Nachahmung von Kulturen"
-      ],
-      "guidance": "Wenn ihr unsicher seid, wählt lieber ein anderes Outfit."
-    },
-    {
-      "id": "kleidung",
-      "title": "No Shirt – No Party",
-      "description": "Oben-ohne-Feiern ist für uns unangebracht. Damit möchten wir Fairness gegenüber Menschen gewährleisten, deren Oberkörper-Freiheit im öffentlichen Raum nach wie vor kriminalisiert ist. Weiterhin verhindert diese Maßnahme eine Reproduktion von dominanter, raumgreifender und toxischer Männlichkeit. "
+      "id": "veranstaltungs_feedback",
+      "title": "Feedback zur Veranstaltung",
+      "description": "Das gilt auch für die Veranstaltung - bitte gib uns Feedback! Wir evaluieren nach jedem Abend die Veranstaltung und unsere Arbeitsweise, um Schwachstellen ausbessern zu können."
     }
   ]
 }

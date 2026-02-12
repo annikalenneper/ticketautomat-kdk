@@ -18,7 +18,6 @@ class SupportTerminalDialog extends StatefulWidget {
 
 class _SupportTerminalDialogState extends State<SupportTerminalDialog> {
   int _currentScreen = 1;
-  int _retryCount = 0;
   bool _isLoading = false;
 
   void _goToScreen(int screen) {
@@ -75,23 +74,12 @@ class _SupportTerminalDialogState extends State<SupportTerminalDialog> {
       case 6:
         // Screen 6: Kontaktversuch
         return KontaktversuchScreen(
-          onRetry: () {
-            setState(() {
-              _retryCount++;
-            });
-            if (_retryCount >= 3) {
-              _goToScreen(3);
-            } else {
-              // Zurück zu Screen 6 (bleibt gleich, Animation startet neu)
-              _goToScreen(6);
-            }
-          },
-          onBack: () => _goToScreen(1),
+          onClose: () => _goToScreen(3),
         );
       case 7:
         // Screen 7: Resignation
         return ResignationScreen(
-          onClose: () => Navigator.of(context).pop(),
+          onClose: () => _goToScreen(3),
         );
       default:
         return AnliegenScreen(
@@ -156,16 +144,6 @@ class _SupportTerminalDialogState extends State<SupportTerminalDialog> {
                         constraints: const BoxConstraints(),
                       ),
                     ],
-                  ),
-                  const SizedBox(height: 8),
-                  const Text(
-                    '„Wir kümmern uns sofort um Ihr Anliegen."',
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w600,
-                      color: AppColors.backgroundLight,
-                      fontStyle: FontStyle.italic,
-                    ),
                   ),
                 ],
               ),

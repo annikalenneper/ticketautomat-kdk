@@ -37,6 +37,8 @@ dependencies:
   esc_pos_utils_plus: ^2.0.4
   print_bluetooth_thermal: ^1.1.9
   image: ^4.1.0
+  shared_preferences: ^2.2.2
+  fl_chart: ^0.69.0
 
 dev_dependencies:
   flutter_test:

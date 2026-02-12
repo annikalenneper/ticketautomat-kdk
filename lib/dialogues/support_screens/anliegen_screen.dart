@@ -15,7 +15,7 @@ class AnliegenScreen extends BaseSelectionScreen {
       icon: Icons.error_outline,
       text: 'Problem melden',
       value: 'PROBLEM',
-      iconColor: AppColors.primary,
+      iconColor: AppColors.secondary,
     ),
     const SelectionButtonData(
       icon: Icons.help_outline,
@@ -27,13 +27,13 @@ class AnliegenScreen extends BaseSelectionScreen {
       icon: Icons.info_outline,
       text: 'Allgemeine Information',
       value: 'INFO',
-      iconColor: AppColors.success,
+      iconColor: AppColors.secondary,
     ),
     const SelectionButtonData(
       icon: Icons.feedback_outlined,
       text: 'Feedback geben',
       value: 'FEEDBACK',
-      iconColor: AppColors.attention,
+      iconColor: AppColors.secondary,
     ),
   ];
 }

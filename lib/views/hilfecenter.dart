@@ -17,21 +17,19 @@ class _HilfeCenterState extends State<HilfeCenter> {
       title: 'Wo bin ich?',
       content:
           'Du befindest dich am KVB Ticketautomaten im Karneval der Kollektive. Der Automat hilft dir, schnell und einfach Fahrkarten für deine Reise zu kaufen.',
-    ),
-    FAQItem(
-      title: '<Was kann hier noch stehen???>',
-      content:
-          'Das DJ-Timetable für das heutige Event findest du unter folgenden Bühnen: Hauptbühne 14:00-15:30 | Nebenbühne 15:00-16:30 | Campusbühne 16:00-17:30. Nutze die Öffi um pünktlich zu deinen Lieblings-DJs zu kommen!',
+      icon: Icons.location_on,
     ),
     FAQItem(
       title: 'Wie habe ich mich zu verhalten?',
       content:
           'Respekt, Toleranz und Sicherheit sind uns wichtig! Verhalte dich respektvoll gegenüber anderen Besucher*innen und Mitarbeiter*innen. Diskriminierung und Gewalt werden nicht toleriert. Bei Fragen oder Problemen kontaktiere jederzeit unser Team.',
+      icon: Icons.info,
     ),
     FAQItem(
-      title: 'Kann der Automat noch mehr?',
+      title: 'Ich brauche was zu tun',
       content:
           'Neben dem Ticketkauf kannst du mit dieser Anwendung auch schnell wichtige Informationen zur Veranstaltung abrufen, die Anlage finden und dich mit anderen austauschen. Bei Fragen helfen wir dir gerne weiter!',
+      icon: Icons.extension,
     ),
   ];
 
@@ -52,8 +50,9 @@ class _HilfeCenterState extends State<HilfeCenter> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   _buildFAQSection(),
-                  const SizedBox(height: 60),
+                  Expanded(child: Container()), // Flexible Spacer
                   _buildSupportSection(),
+                  const SizedBox(height: 20),
                 ],
               ),
             ),
@@ -95,23 +94,10 @@ class _HilfeCenterState extends State<HilfeCenter> {
         ),
         const SizedBox(height: 25),
         Column(
-          children: [
-            Row(
-              children: [
-                Expanded(child: _buildGridItem(_faqItems[0])),
-                const SizedBox(width: 20),
-                Expanded(child: _buildGridItem(_faqItems[1])),
-              ],
-            ),
-            const SizedBox(height: 20),
-            Row(
-              children: [
-                Expanded(child: _buildGridItem(_faqItems[2])),
-                const SizedBox(width: 20),
-                Expanded(child: _buildGridItem(_faqItems[3])),
-              ],
-            ),
-          ],
+          children: _faqItems.map((item) => Padding(
+            padding: const EdgeInsets.only(bottom: 20),
+            child: _buildGridItem(item),
+          )).toList(),
         ),
       ],
     );
@@ -125,7 +111,7 @@ class _HilfeCenterState extends State<HilfeCenter> {
             context: context,
             builder: (context) => const CodeOfConductDialog(),
           );
-        } else if (item.title == 'Kann der Automat noch mehr?') {
+        } else if (item.title == 'Ich brauche was zu tun') {
           showDialog(
             context: context,
             builder: (context) => const AutomatFeaturesDialog(),
@@ -141,28 +127,39 @@ class _HilfeCenterState extends State<HilfeCenter> {
         }
       },
       child: Container(
-        height: 120,
-        padding: const EdgeInsets.all(15),
-        decoration: BoxDecoration(
-          color: AppColors.white,
-          border: Border.all(color: AppColors.black, width: 2),
-          boxShadow: const [
+        decoration: const BoxDecoration(
+          boxShadow: [
             BoxShadow(
               color: AppColors.black,
               offset: Offset(4, 4),
             ),
           ],
         ),
-        child: Center(
-          child: Text(
-            item.title.toUpperCase(),
-            textAlign: TextAlign.center,
-            style: const TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w800,
-              color: AppColors.textDark,
-              letterSpacing: 1,
-            ),
+        child: Container(
+          width: double.infinity,
+          padding: const EdgeInsets.all(17),
+          decoration: BoxDecoration(
+            color: AppColors.white,
+            border: Border.all(color: AppColors.black, width: 2),
+          ),
+          child: Row(
+            children: [
+              Icon(
+                item.icon,
+                color: AppColors.black,
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Text(
+                  item.title.toUpperCase(),
+                  style: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w700,
+                    color: AppColors.textDark,
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
       ),
@@ -221,9 +218,11 @@ class _HilfeCenterState extends State<HilfeCenter> {
 class FAQItem {
   final String title;
   final String content;
+  final IconData icon;
 
   FAQItem({
     required this.title,
     required this.content,
+    required this.icon,
   });
 }
