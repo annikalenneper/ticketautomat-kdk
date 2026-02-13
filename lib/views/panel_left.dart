@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ticket_alternative/styles/app_colors.dart';
+import 'package:ticket_alternative/styles/pulsing_widget.dart';
 import 'package:ticket_alternative/models/haltestelle.dart';
 import 'package:ticket_alternative/printservice/print_service.dart';
 import 'package:ticket_alternative/printservice/ticket_template.dart';
@@ -39,20 +40,22 @@ class PanelLeft extends StatelessWidget {
               child: _buildTripDetails(),
             ),
             const SizedBox(height: 15),
-            Container(
-              width: double.infinity,
-              decoration: const BoxDecoration(
-                boxShadow: [
-                  BoxShadow(
-                    color: AppColors.black,
-                    offset: Offset(4, 4),
-                  ),
-                ],
-              ),
-              child: ElevatedButton(
-                onPressed: toController.text.isEmpty
-                    ? null
-                    : () async {
+            PulsingWidget(
+              enabled: toController.text.isNotEmpty,
+              child: Container(
+                width: double.infinity,
+                decoration: const BoxDecoration(
+                  boxShadow: [
+                    BoxShadow(
+                      color: AppColors.black,
+                      offset: Offset(4, 4),
+                    ),
+                  ],
+                ),
+                child: ElevatedButton(
+                  onPressed: toController.text.isEmpty
+                      ? null
+                      : () async {
                         // Hole Daten aus JSON
                         final haltestelle = HaltestellenService.findByName(toController.text);
                         final preisString = haltestelle?.preis ?? '0';
@@ -107,7 +110,11 @@ class PanelLeft extends StatelessWidget {
                             builder: (context, snapshot) {
                               if (snapshot.connectionState == ConnectionState.done) {
                                 // Schließe Dialog automatisch
-                                Future.microtask(() => Navigator.of(context).pop());
+                                Future.microtask(() {
+                                  if (context.mounted) {
+                                    Navigator.of(context).pop();
+                                  }
+                                });
                               }
                               return const PrintingDialog();
                             },
@@ -132,12 +139,13 @@ class PanelLeft extends StatelessWidget {
                   ),
                   disabledBackgroundColor: AppColors.border,
                 ),
-                child: const Text(
-                  'BUCHUNG FORTSETZEN',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w900,
-                    letterSpacing: 2,
+                  child: const Text(
+                    'BUCHUNG FORTSETZEN',
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w900,
+                      letterSpacing: 2,
+                    ),
                   ),
                 ),
               ),
@@ -255,11 +263,12 @@ class PanelLeft extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 5),
-        GestureDetector(
-          onTap: () async {
-            final haltestellen = await HaltestellenService.loadHaltestellen();
-            if (!context.mounted) return;
-            showDialog(
+        PulsingWidget(
+          child: GestureDetector(
+            onTap: () async {
+              final haltestellen = await HaltestellenService.loadHaltestellen();
+              if (!context.mounted) return;
+              showDialog(
               context: context,
               builder: (BuildContext context) {
                 return Dialog(
@@ -419,6 +428,7 @@ class PanelLeft extends StatelessWidget {
               ),
             ),
           ),
+        ),
         ),
       ],
     );

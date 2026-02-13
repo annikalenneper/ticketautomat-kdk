@@ -24,11 +24,7 @@ class FAQDialog extends StatelessWidget {
     String funnyContent = content;
     if (title.trim().toLowerCase().contains('wo bin ich')) {
       funnyContent =
-          'Du stehst vor dem Automaten – und fragst dich, wo du bist?\n\n' +
-          'Willkommen im Bermuda-Dreieck der Ticketwelt! Hier verschwinden nicht Schiffe, sondern nur Langeweile.\n\n' +
-          'Schau dich um: Wenn du einen blinkenden Automaten, ein paar neugierige Gesichter und vielleicht einen geheimnisvollen Knopf siehst, bist du goldrichtig.\n\n' +
-          'Und falls du dich immer noch fragst, wo du bist: Keine Sorge, wir wissen es meistens auch nicht. Aber Hauptsache, du hast Spaß!\n\n' +
-          '🧠 Awareness-Hinweis: Falls du dich wirklich orientierungslos fühlst oder dir unwohl ist, zögere nicht, jemanden aus dem Team oder die Awareness-Ansprechpersonen anzusprechen. Du bist nicht allein!';
+          'Du stehst vor dem Automaten – und fragst dich, wo du bist? \n\nWillkommen beim KDK – dem kreativen Chaos des Karneval der Kollektive! \n\nWenn du blinkende Lichter, neugierige Gesichter und geheimnisvolle Knöpfe siehst, bist du genau richtig.\n\nUnd falls du dich immer noch fragst, wo du bist: Keine Sorge, wir wissen es meistens auch nicht. Aber Hauptsache, du hast Spaß!';
     }
     return Dialog(
       backgroundColor: Colors.transparent,

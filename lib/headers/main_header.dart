@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ticket_alternative/styles/app_colors.dart';
+import 'package:ticket_alternative/styles/pulsing_widget.dart';
 import '../views/hilfecenter.dart';
 
 class Header extends StatelessWidget {
@@ -58,44 +59,46 @@ class Header extends StatelessWidget {
               ),
             ],
           ),
-          Container(
-            decoration: const BoxDecoration(
-              boxShadow: [
-                BoxShadow(
-                  color: AppColors.black,
-                  offset: Offset(4, 4),
-                ),
-              ],
-            ),
-            child: ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const HilfeCenter()),
-                );
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.backgroundLight,
-                foregroundColor: AppColors.black,
-                padding: const EdgeInsets.symmetric(horizontal: 35, vertical: 15),
-                elevation: 0,
-                side: const BorderSide(color: AppColors.black, width: 2),
-                shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.zero,
-                ),
-              ),
-              child: const Row(
-                children: [
-                  Text('?', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-                  SizedBox(width: 10),
-                  Text(
-                    'Hilfe-Center',
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w700,
-                    ),
+          PulsingWidget(
+            child: Container(
+              decoration: const BoxDecoration(
+                boxShadow: [
+                  BoxShadow(
+                    color: AppColors.black,
+                    offset: Offset(4, 4),
                   ),
                 ],
+              ),
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const HilfeCenter()),
+                  );
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppColors.backgroundLight,
+                  foregroundColor: AppColors.black,
+                  padding: const EdgeInsets.symmetric(horizontal: 35, vertical: 15),
+                  elevation: 0,
+                  side: const BorderSide(color: AppColors.black, width: 2),
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.zero,
+                  ),
+                ),
+                child: const Row(
+                  children: [
+                    Text('?', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                    SizedBox(width: 10),
+                    Text(
+                      'Hilfe-Center',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
